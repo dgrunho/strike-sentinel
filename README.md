@@ -1,0 +1,1 @@
+Monitorizador de greves
