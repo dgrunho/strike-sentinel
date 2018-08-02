@@ -20,14 +20,66 @@
         <vm:MainWindowViewModel x:Key="MainWindowViewModel"/>
     </Window.Resources>
     <Grid>
-        <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
-                                            Mode="PrimaryMid" DockPanel.Dock="Top">
-            <DockPanel>
+
+        <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
+            <materialDesign:DrawerHost.LeftDrawerContent>
+                <StackPanel>
+                    <ToggleButton Style="{StaticResource MaterialDesignHamburgerToggleButton}" 
+                                    DockPanel.Dock="Top"
+                                    HorizontalAlignment="Right" Margin="16"
+                                    IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
+                    <TextBlock
+        Margin="4"
+        HorizontalAlignment="Center">
+      LEFT FIELD
+                    </TextBlock>
+                    
+                    <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
+                            CommandParameter="{x:Static Dock.Left}"
+                            HorizontalAlignment="Center"
+                            Style="{DynamicResource MaterialDesignFlatButton}">
+                        CLOSE THIS
+                    </Button>
+                </StackPanel>
+            </materialDesign:DrawerHost.LeftDrawerContent>
+            <Grid>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <materialDesign:ColorZone Padding="16" 
+                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                  Mode="PrimaryDark" 
+                                  DockPanel.Dock="Top">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <ToggleButton x:Name="MenuToggleButton" 
+                                          Grid.Column="0"
+                                          Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
+                                          />
+                            <TextBlock Grid.Column="1" 
+                               Text="{Binding Titulo}" 
+                               HorizontalAlignment="Left" 
+                               VerticalAlignment="Center" 
+                               Margin="5"
+                               FontSize="22"/>
+                            <Button Style="{StaticResource MaterialDesignFlatButton}"
+                            Grid.Column="2"
+                            Foreground="{DynamicResource MaterialDesignBody}"
+                            ToolTip="Pesquisar" 
+                            Padding="5"
+                            Command="{Binding cmdNewProject}">
+                                <materialDesign:PackIcon Kind="Magnify" 
+                                                 Width="24"
+                                                 Height="24"/>
+                            </Button>
+                        </Grid>
+                        <!--<DockPanel>
                 <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
                     <StackPanel>
                         <Button Command="{Binding cmdNewProject}">
@@ -56,14 +108,19 @@
                         </Button>
                     </StackPanel>
                 </materialDesign:PopupBox>
-                <TextBlock Text="{Binding Titulo}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="22"/>
-            </DockPanel>
-        </materialDesign:ColorZone>
-        <Grid Grid.Row="1">
-        </Grid>
-    </Grid>
-        <materialDesign:Snackbar Grid.Row="1" MessageQueue="{Binding PropertiesMessageQueue}"
+                
+                
+            </DockPanel>-->
+                    </materialDesign:ColorZone>
+                    <Grid Grid.Row="1">
+                    </Grid>
+                </Grid>
+                <materialDesign:Snackbar Grid.Row="1" MessageQueue="{Binding PropertiesMessageQueue}"
                                                  x:Name="snPropriedades" />
+            </Grid>
+        </materialDesign:DrawerHost>
+        
     </Grid>
+
 
 </Window>
