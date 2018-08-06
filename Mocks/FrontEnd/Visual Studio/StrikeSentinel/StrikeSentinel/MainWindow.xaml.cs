@@ -24,5 +24,15 @@ namespace StrikeSentinel
         {
             InitializeComponent();
         }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Window_Initialized(object sender, EventArgs e)
+        {
+            AnimContainer.Visibility = Visibility.Visible;
+        }
     }
 }

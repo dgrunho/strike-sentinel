@@ -15,9 +15,16 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{StaticResource MaterialDesignFont}"
-        DataContext="{DynamicResource MainWindowViewModel}">
+        DataContext="{DynamicResource MainWindowViewModel}"
+        WindowStartupLocation="CenterScreen"
+        Initialized="Window_Initialized">
     <Window.Resources>
+        <ResourceDictionary>
         <vm:MainWindowViewModel x:Key="MainWindowViewModel"/>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            </ResourceDictionary>
     </Window.Resources>
     <Grid>
 
@@ -28,18 +35,20 @@
                                     DockPanel.Dock="Top"
                                     HorizontalAlignment="Right" Margin="16"
                                     IsChecked="{Binding ElementName=MenuToggleButton, Path=IsChecked, Mode=TwoWay}" />
-                    <TextBlock
-        Margin="4"
-        HorizontalAlignment="Center">
-      LEFT FIELD
-                    </TextBlock>
-                    
+                    <TextBlock Margin="4"
+                               HorizontalAlignment="Center"
+                               Text="LEFT FIELD"/>
+
                     <Button Command="{x:Static materialDesign:DrawerHost.CloseDrawerCommand}"
                             CommandParameter="{x:Static Dock.Left}"
                             HorizontalAlignment="Center"
-                            Style="{DynamicResource MaterialDesignFlatButton}">
-                        CLOSE THIS
-                    </Button>
+                            Style="{DynamicResource MaterialDesignFlatButton}"
+                            Content="Fechar"/>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="IsDark" VerticalAlignment="Bottom"/>
+                        <CheckBox Style="{StaticResource MaterialDesignSwitchAccentToggleButton}" IsChecked="{Binding IsDarkTheme}"/>
+                    </StackPanel>
+
                 </StackPanel>
             </materialDesign:DrawerHost.LeftDrawerContent>
             <Grid>
@@ -49,9 +58,9 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <materialDesign:ColorZone Padding="16" 
-                                  materialDesign:ShadowAssist.ShadowDepth="Depth3"
-                                  Mode="PrimaryDark" 
-                                  DockPanel.Dock="Top">
+                                              materialDesign:ShadowAssist.ShadowDepth="Depth3"
+                                              Mode="PrimaryDark" 
+                                              DockPanel.Dock="Top">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -63,63 +72,101 @@
                                           Style="{DynamicResource MaterialDesignHamburgerToggleButton}"
                                           />
                             <TextBlock Grid.Column="1" 
-                               Text="{Binding Titulo}" 
-                               HorizontalAlignment="Left" 
-                               VerticalAlignment="Center" 
-                               Margin="5"
-                               FontSize="22"/>
-                            <Button Style="{StaticResource MaterialDesignFlatButton}"
-                            Grid.Column="2"
-                            Foreground="{DynamicResource MaterialDesignBody}"
-                            ToolTip="Pesquisar" 
-                            Padding="5"
-                            Command="{Binding cmdNewProject}">
+                                       Text="{Binding Titulo}" 
+                                       HorizontalAlignment="Left" 
+                                       VerticalAlignment="Center" 
+                                       Margin="5"
+                                       FontSize="22"/>
+                            <Button Style="{StaticResource MaterialDesignToolForegroundButton}"
+                                    Grid.Column="2"
+                                    ToolTip="Pesquisar" 
+                                    Padding="5"
+                                    Command="{Binding cmdNewProject}">
                                 <materialDesign:PackIcon Kind="Magnify" 
-                                                 Width="24"
-                                                 Height="24"/>
+                                                         Width="24"
+                                                         Height="24"/>
                             </Button>
                         </Grid>
-                        <!--<DockPanel>
-                <materialDesign:PopupBox DockPanel.Dock="Right" PlacementMode="BottomAndAlignRightEdges" StaysOpen="False">
-                    <StackPanel>
-                        <Button Command="{Binding cmdNewProject}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <materialDesign:PackIcon Kind="File" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="Novo"/>
-                            </Grid>
-                        </Button>
-                        
-                        <Separator/>
-                        
-                        <Separator/>
-                        <Button Command="{Binding cmdNewProject}">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="*"/>
-                                </Grid.ColumnDefinitions>
-                                <materialDesign:PackIcon Kind="ExitToApp" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                                <TextBlock Grid.Column="1" Text="Sair"/>
-                            </Grid>
-                        </Button>
-                    </StackPanel>
-                </materialDesign:PopupBox>
-                
-                
-            </DockPanel>-->
                     </materialDesign:ColorZone>
                     <Grid Grid.Row="1">
+                        <Image Source="Recursos/CyberOwlGray.png" Margin="100" Opacity="0.5"/>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <!--<UniformGrid MaxHeight="100" Columns="8" Grid.Row="0">
+                                <Border Background="{DynamicResource PrimaryHueDarkBrush}"/>
+                                <Border Background="{DynamicResource PrimaryHueDarkForegroundBrush}"/>
+                                <Border Background="{DynamicResource PrimaryHueMidBrush}"/>
+                                <Border Background="{DynamicResource   PrimaryHueMidForegroundBrush}"/>
+                                <Border Background="{DynamicResource PrimaryHueLightBrush}"/>
+                                <Border Background="{DynamicResource PrimaryHueLightForegroundBrush}"/>
+                                <Border Background="{DynamicResource SecondaryAccentBrush}"/>
+                                <Border Background="{DynamicResource SecondaryAccentForegroundBrush}"/>
+                            </UniformGrid>-->
+                        </Grid>
+                        <materialDesign:PopupBox
+                            Style="{DynamicResource MaterialDesignMultiFloatingActionAccentPopupBox}"
+                            PlacementMode="TopAndAlignCentres"
+                            ToggleCheckedContentCommandParameter="wowsers"
+                            ToolTip="PopupBox, Style MaterialDesignMultiFloatingActionAccentPopupBox"
+                            VerticalAlignment="Bottom" HorizontalAlignment="Right" Margin="10">
+                            <materialDesign:PopupBox.ToggleCheckedContent>
+                                <materialDesign:PackIcon
+                                    Kind="Pencil"
+                                    Width="24"
+                                    Height="24" />
+                            </materialDesign:PopupBox.ToggleCheckedContent>
+                            <StackPanel>
+                                <Button ToolTip="One">
+                                    1
+                                </Button>
+                                <Button ToolTip="Two"
+                                        IsEnabled="False">
+                                    2
+                                </Button>
+                                <Button ToolTip="Three">
+                                    3
+                                </Button>
+                            </StackPanel>
+                        </materialDesign:PopupBox>
                     </Grid>
                 </Grid>
-                <materialDesign:Snackbar Grid.Row="1" MessageQueue="{Binding PropertiesMessageQueue}"
-                                                 x:Name="snPropriedades" />
+                <materialDesign:Snackbar Grid.Row="1" 
+                                         MessageQueue="{Binding PropertiesMessageQueue}"
+                                         x:Name="snPropriedades" />
             </Grid>
         </materialDesign:DrawerHost>
-        
+        <Grid x:Name="AnimContainer" Background="White">
+            <Image x:Name="Owl" Source="Recursos/CyberOwl.png" Margin="50" >
+                <Image.Triggers>
+                    <EventTrigger RoutedEvent="Image.Loaded">
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ObjectAnimationUsingKeyFrames BeginTime="00:00:00" Storyboard.TargetName="AnimContainer" Storyboard.TargetProperty="(UIElement.Visibility)">
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:00" Value="{x:Static Visibility.Visible}"/>
+                                    <DiscreteObjectKeyFrame KeyTime="00:00:01.2" Value="{x:Static Visibility.Collapsed}"/>
+                                </ObjectAnimationUsingKeyFrames>
+                                <ThicknessAnimationUsingKeyFrames Storyboard.TargetProperty="Margin"
+                                                                  BeginTime="00:00:01"
+                                                                  Storyboard.TargetName="Owl">
+                                    <SplineThicknessKeyFrame KeyTime="00:00:00" Value="50, 50, 50, 50" />
+                                    <SplineThicknessKeyFrame KeyTime="00:00:0.2" Value="100, 170,100,100" />
+                                </ThicknessAnimationUsingKeyFrames>
+                                <DoubleAnimation Storyboard.TargetName="AnimContainer" 
+                                                 Storyboard.TargetProperty="Opacity"
+                                                From="1" To="0" 
+                                                Duration="0:00:0.2"
+                                                BeginTime="0:00:1.2" />
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </EventTrigger>
+                </Image.Triggers>
+            </Image>
+        </Grid>
+
     </Grid>
 
 
