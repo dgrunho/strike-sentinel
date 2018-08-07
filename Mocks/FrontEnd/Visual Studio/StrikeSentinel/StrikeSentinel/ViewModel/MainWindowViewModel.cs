@@ -95,12 +95,12 @@ namespace StrikeSentinel.ViewModel
             {
                 
             }
-
-            Greves.Add(new Greve(null, "Comboios", DateTime.Now.AddDays(0), DateTime.Now.AddDays(1), "bla bla", true, null, null, false, "CP", "http://google.com"));
-            Greves.Add(new Greve(null, "Metro", DateTime.Now.AddDays(1), DateTime.Now.AddDays(2), "bla bla", true, null, null, false, "Metro de Lisboa", "http://google.com"));
-            Greves.Add(new Greve(null, "Autocarro", DateTime.Now.AddDays(2), DateTime.Now.AddDays(3), "bla bla", true, null, null, false, "Carris", "http://google.com"));
-            Greves.Add(new Greve(null, "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(6), "bla bla", true, null, null, false, "Centro Hospitalar do médio Tejo", "http://google.com"));
-            Greves.Add(new Greve(null, "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, null, null, false, "Professores", "http://google.com"));
+            DateTime Today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
+            Greves.Add(new Greve(null, "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, false, "CP", "http://google.com"));
+            Greves.Add(new Greve(null, "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, false, "Metro de Lisboa", "http://google.com"));
+            Greves.Add(new Greve(null, "Autocarro", DateTime.Now.AddDays(2), DateTime.Now.AddDays(3), "bla bla", true, false, "Carris", "http://google.com"));
+            Greves.Add(new Greve(null, "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(6), "bla bla", true,  false, "Centro Hospitalar do médio Tejo", "http://google.com"));
+            Greves.Add(new Greve(null, "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true,  false, "Professores", "http://google.com"));
         }
 
         #endregion

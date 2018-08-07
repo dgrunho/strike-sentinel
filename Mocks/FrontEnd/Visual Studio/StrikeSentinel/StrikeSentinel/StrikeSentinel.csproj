@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BooleanToVisibility.cs" />
     <Compile Include="Helpers\RelayCommand.cs" />
     <Compile Include="Model\Greve.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />

@@ -6,6 +6,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:StrikeSentinel"
         xmlns:vm="clr-namespace:StrikeSentinel.ViewModel"
+        xmlns:Converter="clr-namespace:StrikeSentinel.Converters"
         mc:Ignorable="d"
         Title="{Binding Titulo}" Height="720" Width="405"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -20,11 +21,13 @@
         Initialized="Window_Initialized">
     <Window.Resources>
         <ResourceDictionary>
-        <vm:MainWindowViewModel x:Key="MainWindowViewModel"/>
+            <vm:MainWindowViewModel x:Key="MainWindowViewModel"/>
+            <Converter:InvertedBooleanToVisibleConverter x:Key="InvertedBoolToVisConverter" Collapse="True"/>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            </ResourceDictionary>
+        </ResourceDictionary>
+
     </Window.Resources>
     <Grid>
 
@@ -60,7 +63,8 @@
                     <materialDesign:ColorZone Padding="16" 
                                               materialDesign:ShadowAssist.ShadowDepth="Depth3"
                                               Mode="PrimaryDark" 
-                                              DockPanel.Dock="Top">
+                                              DockPanel.Dock="Top"
+                                              Panel.ZIndex="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto"/>
@@ -89,11 +93,11 @@
                         </Grid>
                     </materialDesign:ColorZone>
                     <Grid Grid.Row="1">
-                        <Image Source="Recursos/CyberOwlGray.png" Margin="100" Opacity="0.5"/>
+                        <Image Source="Recursos/CyberOwlGray.png" Margin="100" Opacity="0.5" Visibility="{Binding HasItems,ElementName=icGreves,Converter={StaticResource InvertedBoolToVisConverter}}"/>
                         <Grid>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
                                 <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
                             <!--<UniformGrid MaxHeight="100" Columns="8" Grid.Row="0">
@@ -106,6 +110,57 @@
                                 <Border Background="{DynamicResource SecondaryAccentBrush}"/>
                                 <Border Background="{DynamicResource SecondaryAccentForegroundBrush}"/>
                             </UniformGrid>-->
+                            <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                                                            <Grid>
+                                <Grid.Resources>
+                                    <CollectionViewSource x:Key="Animals" Source="{Binding Greves}">
+                                        <CollectionViewSource.GroupDescriptions>
+                                            <PropertyGroupDescription PropertyName="DateGroup" />
+                                        </CollectionViewSource.GroupDescriptions>
+                                    </CollectionViewSource>
+                                </Grid.Resources>
+
+                                <ItemsControl x:Name="icGreves" ItemsSource="{Binding Source={StaticResource Animals}}">
+                                    <ItemsControl.GroupStyle>
+                                        <GroupStyle>
+                                            <GroupStyle.ContainerStyle>
+                                                <Style TargetType="{x:Type GroupItem}">
+                                                    <Setter Property="Template">
+                                                        <Setter.Value>
+                                                            <ControlTemplate>
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="*"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <TextBlock Grid.Row="0" Margin="10,10,10,0" FontSize="20" FontWeight="SemiBold" Foreground="DimGray" Text="{Binding Name}"/>
+                                                                    <materialDesign:Card Grid.Row="1" Margin="10" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                                                        <ItemsPresenter />
+                                                                    </materialDesign:Card>
+                                                                </Grid>
+                                                            </ControlTemplate>
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Style>
+                                            </GroupStyle.ContainerStyle>
+                                        </GroupStyle>
+                                    </ItemsControl.GroupStyle>
+
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Empresa}"/>
+                                                <TextBlock Text="{Binding DataInicio}"/>
+                                                <TextBlock Text="{Binding DateGroup}"/>
+                                            </StackPanel>
+                                            
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                            </Grid>
+                            </ScrollViewer>
+
+                            
                         </Grid>
                         <materialDesign:PopupBox
                             Style="{DynamicResource MaterialDesignMultiFloatingActionAccentPopupBox}"
@@ -139,7 +194,7 @@
                                          x:Name="snPropriedades" />
             </Grid>
         </materialDesign:DrawerHost>
-        <Grid x:Name="AnimContainer" Background="White">
+        <Grid x:Name="AnimContainer" Background="White" Visibility="Collapsed">
             <Image x:Name="Owl" Source="Recursos/CyberOwl.png" Margin="50" >
                 <Image.Triggers>
                     <EventTrigger RoutedEvent="Image.Loaded">

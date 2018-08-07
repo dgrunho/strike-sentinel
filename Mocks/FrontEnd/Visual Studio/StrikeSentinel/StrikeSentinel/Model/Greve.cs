@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +10,7 @@ namespace StrikeSentinel.Model
 {
     public class Greve : INotifyPropertyChanged
     {
-        public Greve(byte[] icon, string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, DateTime? horainicio, DateTime? horafim, bool cancelada, string empresa, string sourcelink)
+        public Greve(byte[] icon, string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, bool cancelada, string empresa, string sourcelink)
         {
             Icon = icon;
             Tipo = tipo;
@@ -17,11 +18,12 @@ namespace StrikeSentinel.Model
             DataFim = datafim;
             Observacoes = observacoes;
             TodoDia = tododia;
-            HoraInicio = horainicio;
-            HoraFim = horafim;
+            //HoraInicio = horainicio;
+            //HoraFim = horafim;
             Cancelada = cancelada;
             Empresa = empresa;
             SourceLink = sourcelink;
+            SetDateName();
         }
 
 
@@ -110,33 +112,33 @@ namespace StrikeSentinel.Model
             }
         }
 
-        DateTime? _HoraInicio;
-        public DateTime? HoraInicio
-        {
-            get { return _HoraInicio; }
-            set
-            {
-                if (_HoraInicio != value)
-                {
-                    _HoraInicio = value;
-                    RaisePropertyChanged("HoraInicio");
-                }
-            }
-        }
+        //DateTime? _HoraInicio;
+        //public DateTime? HoraInicio
+        //{
+        //    get { return _HoraInicio; }
+        //    set
+        //    {
+        //        if (_HoraInicio != value)
+        //        {
+        //            _HoraInicio = value;
+        //            RaisePropertyChanged("HoraInicio");
+        //        }
+        //    }
+        //}
 
-        DateTime? _HoraFim;
-        public DateTime? HoraFim
-        {
-            get { return _HoraFim; }
-            set
-            {
-                if (_HoraFim != value)
-                {
-                    _HoraFim = value;
-                    RaisePropertyChanged("HoraFim");
-                }
-            }
-        }
+        //DateTime? _HoraFim;
+        //public DateTime? HoraFim
+        //{
+        //    get { return _HoraFim; }
+        //    set
+        //    {
+        //        if (_HoraFim != value)
+        //        {
+        //            _HoraFim = value;
+        //            RaisePropertyChanged("HoraFim");
+        //        }
+        //    }
+        //}
 
 
         bool _Cancelada;
@@ -181,11 +183,49 @@ namespace StrikeSentinel.Model
             }
         }
 
+        string _DateGroup;
+        public string DateGroup
+        {
+            get { return _DateGroup; }
+            set
+            {
+                if (_DateGroup != value)
+                {
+                    _DateGroup = value;
+                    RaisePropertyChanged("DateGroup");
+                }
+            }
+        }
+
+        void SetDateName() {
+            DateTime Today = DateTime.Now;
+            DateTime Tomorrow = DateTime.Parse(DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
+            if (Today  >= DataInicio && Today <= DataFim)
+            {
+                DateGroup = "Hoje";
+            } else if (Tomorrow >= DataInicio && Tomorrow <= DataFim)
+            {
+                DateGroup = "Amanhã";
+            }
+            else
+            {
+                if (DataInicio.Year == Today.Year)
+                {
+                    DateGroup = DataInicio.ToString("MMMM", CultureInfo.CreateSpecificCulture("pt"));
+                }
+                else 
+                {
+                    DateGroup = DataInicio.ToString("MMMM", CultureInfo.CreateSpecificCulture("pt")) + " " + DataInicio.Year;
+                }
+
+            }
+        }
 
         void RaisePropertyChanged(string prop)
         {
             if (PropertyChanged != null) { PropertyChanged(this, new PropertyChangedEventArgs(prop)); }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+
     }
 }
