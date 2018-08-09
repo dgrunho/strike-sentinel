@@ -81,6 +81,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Recursos\Estilos.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -121,11 +125,24 @@
     <Resource Include="Recursos\Anim2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Recursos\IconesEmpresas\CArris.jpg" />
+    <Resource Include="Recursos\Mapa.png" />
+    <Resource Include="Recursos\IconesEmpresas\Metro70.png" />
+    <Content Include="Recursos\IconesEmpresas\Carris.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\IconesEmpresas\CHMT.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Recursos\IconesEmpresas\CHMT.svg" />
-    <Resource Include="Recursos\IconesEmpresas\CP.png" />
-    <Resource Include="Recursos\IconesEmpresas\Metro.png" />
-    <Resource Include="Recursos\IconesEmpresas\Professor.png" />
+    <Content Include="Recursos\IconesEmpresas\CP.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\IconesEmpresas\Metro.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Recursos\IconesEmpresas\Professor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

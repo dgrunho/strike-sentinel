@@ -33,6 +33,7 @@ namespace StrikeSentinel
         private void Window_Initialized(object sender, EventArgs e)
         {
             AnimContainer.Visibility = Visibility.Visible;
+            dhMain.SetValue(Panel.ZIndexProperty, 1);
         }
     }
 }

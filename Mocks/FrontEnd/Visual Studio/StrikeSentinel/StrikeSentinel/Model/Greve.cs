@@ -10,7 +10,7 @@ namespace StrikeSentinel.Model
 {
     public class Greve : INotifyPropertyChanged
     {
-        public Greve(byte[] icon, string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, bool cancelada, string empresa, string sourcelink)
+        public Greve(byte[] icon, string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, string estado, string estadodescr, string cor, string empresa, string sourcelink)
         {
             Icon = icon;
             Tipo = tipo;
@@ -18,9 +18,9 @@ namespace StrikeSentinel.Model
             DataFim = datafim;
             Observacoes = observacoes;
             TodoDia = tododia;
-            //HoraInicio = horainicio;
-            //HoraFim = horafim;
-            Cancelada = cancelada;
+            Estado = estado;
+            EstadoDescr = estadodescr;
+            Cor = cor;
             Empresa = empresa;
             SourceLink = sourcelink;
             SetDateName();
@@ -112,45 +112,44 @@ namespace StrikeSentinel.Model
             }
         }
 
-        //DateTime? _HoraInicio;
-        //public DateTime? HoraInicio
-        //{
-        //    get { return _HoraInicio; }
-        //    set
-        //    {
-        //        if (_HoraInicio != value)
-        //        {
-        //            _HoraInicio = value;
-        //            RaisePropertyChanged("HoraInicio");
-        //        }
-        //    }
-        //}
-
-        //DateTime? _HoraFim;
-        //public DateTime? HoraFim
-        //{
-        //    get { return _HoraFim; }
-        //    set
-        //    {
-        //        if (_HoraFim != value)
-        //        {
-        //            _HoraFim = value;
-        //            RaisePropertyChanged("HoraFim");
-        //        }
-        //    }
-        //}
-
-
-        bool _Cancelada;
-        public bool Cancelada
+        string _Estado;
+        public string Estado
         {
-            get { return _Cancelada; }
+            get { return _Estado; }
             set
             {
-                if (_Cancelada != value)
+                if (_Estado != value)
                 {
-                    _Cancelada = value;
-                    RaisePropertyChanged("Cancelada");
+                    _Estado = value;
+                    RaisePropertyChanged("Estado");
+                }
+            }
+        }
+
+        string _EstadoDescr;
+        public string EstadoDescr
+        {
+            get { return _EstadoDescr; }
+            set
+            {
+                if (_EstadoDescr != value)
+                {
+                    _EstadoDescr = value;
+                    RaisePropertyChanged("EstadoDescr");
+                }
+            }
+        }
+
+        string _Cor;
+        public string Cor
+        {
+            get { return _Cor; }
+            set
+            {
+                if (_Cor != value)
+                {
+                    _Cor = value;
+                    RaisePropertyChanged("Cor");
                 }
             }
         }
@@ -198,6 +197,7 @@ namespace StrikeSentinel.Model
         }
 
         void SetDateName() {
+            TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
             DateTime Today = DateTime.Now;
             DateTime Tomorrow = DateTime.Parse(DateTime.Now.AddDays(1).ToString("yyyy-MM-dd"));
             if (Today  >= DataInicio && Today <= DataFim)
@@ -211,11 +211,11 @@ namespace StrikeSentinel.Model
             {
                 if (DataInicio.Year == Today.Year)
                 {
-                    DateGroup = DataInicio.ToString("MMMM", CultureInfo.CreateSpecificCulture("pt"));
+                    DateGroup = textInfo.ToTitleCase(DataInicio.ToString("MMMM", CultureInfo.CreateSpecificCulture("pt")));
                 }
                 else 
                 {
-                    DateGroup = DataInicio.ToString("MMMM", CultureInfo.CreateSpecificCulture("pt")) + " " + DataInicio.Year;
+                    DateGroup = textInfo.ToTitleCase(DataInicio.ToString("MMMM", CultureInfo.CreateSpecificCulture("pt"))) + " " + DataInicio.Year;
                 }
 
             }
