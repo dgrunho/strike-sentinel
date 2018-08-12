@@ -48,9 +48,10 @@ namespace WebScraper
         public List<string> ScrapeHtml()
         {
             //TODO ver o que fazer caso esta secção não esteja definida no ficheiro de configuração
-            string siteAddress = Configuration.GetSection("SiteAddress").Value;
-            string xpathLastArticles = Configuration.GetSection("XPath").GetSection("LastArticles").Value;
-            string xpathEachArticle = Configuration.GetSection("XPath").GetSection("EachArticle").Value;
+            IConfigurationSection publicoConfiguratio = Configuration.GetSection("PublicoScraper");
+            string siteAddress = publicoConfiguratio["SiteAddress"];
+            string xpathLastArticles = publicoConfiguratio.GetSection("XPath")["LastArticles"];
+            string xpathEachArticle = publicoConfiguratio.GetSection("XPath")["EachArticle"];
 
             HtmlDocument htmlDoc;
             htmlDoc = ParseHtml(siteAddress);
