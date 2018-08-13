@@ -10,10 +10,12 @@ namespace WebScraper
     public class DummyScraper
     {
         public IConfiguration Configuration { get; }
+        public string ScraperName { get; set; } //TODO é necessário ter o "set;"?
 
-        public DummyScraper(IConfiguration configuration)
+        public DummyScraper(string scraperName, IConfiguration configuration)
         {
             Configuration = configuration;
+            ScraperName = scraperName;
         }
 
         #region "Private Methods"
@@ -48,18 +50,18 @@ namespace WebScraper
         public List<string> ScrapeHtml()
         {
             //TODO ver o que fazer caso esta secção não esteja definida no ficheiro de configuração
-            IConfigurationSection publicoConfiguratio = Configuration.GetSection("PublicoScraper");
-            string siteAddress = publicoConfiguratio["SiteAddress"];
-            string xpathLastArticles = publicoConfiguratio.GetSection("XPath")["LastArticles"];
-            string xpathEachArticle = publicoConfiguratio.GetSection("XPath")["EachArticle"];
+            IConfigurationSection config = Configuration.GetSection(ScraperName);
+            string siteAddress = config["SiteAddress"];
+            string xpathLastArticles = config.GetSection("XPath")["LastArticles"];
+            string xpathEachArticle = config.GetSection("XPath")["EachArticle"];
 
             HtmlDocument htmlDoc;
             htmlDoc = ParseHtml(siteAddress);
 
-            List<string> result;
-            result = TraversingHtml(htmlDoc,xpathLastArticles,xpathEachArticle);
+            List<string> linksList;
+            linksList = TraversingHtml(htmlDoc,xpathLastArticles,xpathEachArticle);
 
-            return result;
+            return linksList;
         }
 
         #endregion
