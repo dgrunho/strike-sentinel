@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
@@ -9,13 +10,16 @@ namespace WebScraper
     //TODO documentar classe
     public class DummyScraper
     {
+        private struct News
+        {
+            public string Title { get; set; }
+            public string Link { get; set; }
+        }
         public IConfiguration Configuration { get; }
-        public string ScraperName { get; set; } //TODO é necessário ter o "set;"?
 
-        public DummyScraper(string scraperName, IConfiguration configuration)
+        public DummyScraper(IConfiguration configuration)
         {
             Configuration = configuration;
-            ScraperName = scraperName;
         }
 
         #region "Private Methods"
@@ -28,38 +32,86 @@ namespace WebScraper
         }
 
         //TODO documentar metodo
-        private List<string> TraversingHtml(HtmlDocument htmlDoc, string xpathLastArticles, string xpathEachArticle)
+        private List<News> TraversingHtml(string siteAddress, HtmlDocument htmlDoc, string xpathLastArticles, string xpathEachArticle)
         {
-            List<string> newsArticles = new List<string>();
+            List<News> newsArticles = new List<News>();
+            News newsArticle;
             var htmlNodesLatestArticles = htmlDoc.DocumentNode.SelectNodes(xpathLastArticles);
             foreach (var articles in htmlNodesLatestArticles)
             {
                 var htmlNodesEachArticle = articles.SelectNodes(xpathEachArticle);
                 foreach (var article in htmlNodesEachArticle)
                 {
-                    newsArticles.Add(article.InnerHtml);
+                    newsArticle = new News();
+                    newsArticle.Title = article.InnerHtml;
+                    newsArticle.Link = siteAddress + article.GetAttributeValue("href","");
+                    newsArticles.Add(newsArticle);
                 }
             }
             return newsArticles;
+        }
+
+        //TODO documentar metodo
+        private List<string> FilterResults(ref List<News> articlesList)
+        {
+            List<string> linksList = new List<string>();
+            //obtem a lista com as keywords para pesquisa de greves, a partir do ficheiro de configuração
+            IConfigurationSection strikeKeywordsSection = Configuration.GetSection("GeneralSettings").GetSection("StrikeKeywords");
+            IEnumerable<IConfigurationSection> strikeKeywordsSectionMembers = strikeKeywordsSection.GetChildren();
+            List<string> strikeKeywords = (from sk in strikeKeywordsSectionMembers select sk.Value).ToList();
+            //pesquisa nos artigos recolhidos se algum contem alguma keyword relacionada com greves
+            foreach (var article in articlesList)
+            {
+                foreach (string strikeKeyword in strikeKeywords)
+                {
+                    if (article.Title.ToUpper().Contains(strikeKeyword.ToUpper()))
+                    {
+                        linksList.Add(article.Link);
+                    }
+                }
+            }
+            return linksList;
+        }
+
+        //TODO documentar o metodo
+        private void ValidateSettingsFile()
+        {
+            //TODO implementar
+            throw new Exception("Method ValidateSettingsFile() not implemented yet!");
         }
 
         #endregion
 
         #region "Public Methods"
 
+        //TODO documentar este metodo
         public List<string> ScrapeHtml()
         {
             //TODO ver o que fazer caso esta secção não esteja definida no ficheiro de configuração
-            IConfigurationSection config = Configuration.GetSection(ScraperName);
-            string siteAddress = config["SiteAddress"];
-            string xpathLastArticles = config.GetSection("XPath")["LastArticles"];
-            string xpathEachArticle = config.GetSection("XPath")["EachArticle"];
-
+            IConfigurationSection scrapersSettingsSection = Configuration.GetSection("ScraperSettings");
+            IEnumerable<IConfigurationSection> scraperSettingsMembers = scrapersSettingsSection.GetChildren();
+            string searchAddress, siteAddress, xpathLastArticles, xpathEachArticle;
             HtmlDocument htmlDoc;
-            htmlDoc = ParseHtml(siteAddress);
-
+            List<News> articlesList = new List<News>();
             List<string> linksList;
-            linksList = TraversingHtml(htmlDoc,xpathLastArticles,xpathEachArticle);
+
+            foreach (IConfigurationSection scraperSetting in scraperSettingsMembers)
+            {
+                if(scraperSetting["State"].ToUpper() == "ON")
+                { 
+                    searchAddress = scraperSetting["SearchAddress"];
+                    siteAddress = scraperSetting["SiteAddress"];
+                    xpathLastArticles = scraperSetting.GetSection("XPath")["LastArticles"];
+                    xpathEachArticle = scraperSetting.GetSection("XPath")["EachArticle"];
+                
+                    htmlDoc = ParseHtml(searchAddress);
+
+                    //TODO melhorar este código
+                    articlesList.AddRange(TraversingHtml(siteAddress, htmlDoc, xpathLastArticles, xpathEachArticle));
+                }
+            }
+
+            linksList = FilterResults(ref articlesList);
 
             return linksList;
         }
