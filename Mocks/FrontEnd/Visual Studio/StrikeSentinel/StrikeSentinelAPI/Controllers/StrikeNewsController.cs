@@ -35,6 +35,7 @@ namespace StrikeSentinelAPI.Controllers
          * Instruções à API
          */
         // GET: api/StrikeNews/search
+        [Obsolete]
         [HttpGet("{command}")]
         public string SearchStrikeNews([FromRoute] String command)
         {
@@ -69,6 +70,35 @@ namespace StrikeSentinelAPI.Controllers
                 return "Error: " + e.ToString();
             }
         }
+
+        #region "API actions"
+
+        [HttpPut("scrapenews")]
+        public int SearchStrikeNews()
+        {
+            IConfiguration botContiguration;
+            try
+            {
+                botContiguration = GetConfiguration("scrapersettings.json");
+            } catch(Exception ex)
+            {
+                //TODO log do que aconteceu de errado
+                return 0;
+            }
+            DummyScraper bot = new DummyScraper(botContiguration);
+            List<String> linksList = bot.ScrapeHtml();
+            StrikeNews strikeNews;
+            foreach (string link in linksList)
+            {
+                strikeNews = new StrikeNews();
+                strikeNews.SourceLink = link;
+                _context.StrikeNews.Add(strikeNews);
+                _context.SaveChanges();
+            }
+            return linksList.Count;
+        }
+
+        #endregion
 
         // GET: api/StrikeNews
         [HttpGet]
