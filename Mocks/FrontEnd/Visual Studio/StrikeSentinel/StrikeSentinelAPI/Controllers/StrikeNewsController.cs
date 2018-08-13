@@ -12,12 +12,6 @@ using Microsoft.AspNetCore.Hosting;
 
 namespace StrikeSentinelAPI.Controllers
 {
-    //TODO apagar esta classe
-    public class APICommand {
-        public string command { get; set; }
-        public IEnumerable<string> parameters { get; set; }
-    }
-
     [Produces("application/json")]
     [Route("api/StrikeNews")]
     public class StrikeNewsController : Controller
@@ -31,74 +25,43 @@ namespace StrikeSentinelAPI.Controllers
             _context = context;
         }
 
-        /*
-         * Instruções à API
-         */
-        // GET: api/StrikeNews/search
-        [Obsolete]
-        [HttpGet("{command}")]
-        public string SearchStrikeNews([FromRoute] String command)
-        {
-            try {
-                if(command == "search") { 
-                    List<String> news = DummyScraper.Scrape();
-                    StrikeNews strikeNews;
-                    foreach (string title in news)
-                    {
-                        strikeNews = new StrikeNews();
-                        strikeNews.SourceLink = title;
-                        _context.StrikeNews.Add(strikeNews);
-                        _context.SaveChanges();
-                    }
-                }
-                if (command == "searchv2")
-                {
-                    DummyScraper bot = new DummyScraper(GetConfiguration("scrapersettings.json"));
-                    List<String> news = bot.ScrapeHtml();
-                    StrikeNews strikeNews;
-                    foreach (string title in news)
-                    {
-                        strikeNews = new StrikeNews();
-                        strikeNews.SourceLink = title;
-                        _context.StrikeNews.Add(strikeNews);
-                        _context.SaveChanges();
-                    }
-                }
-                return command;
-            } catch (Exception e)
-            {
-                return "Error: " + e.ToString();
-            }
-        }
+        #region "Actions"
 
-        #region "API actions"
-
-        [HttpPut("scrapenews")]
-        public int SearchStrikeNews()
+        [HttpPut("SearchStrikeNews")]
+        public IActionResult SearchStrikeNews()
         {
             IConfiguration botContiguration;
             try
             {
                 botContiguration = GetConfiguration("scrapersettings.json");
-            } catch(Exception ex)
+            }
+            catch (Exception)
             {
                 //TODO log do que aconteceu de errado
-                return 0;
+                throw;
             }
+
+            //pesquisa novas noticias
             DummyScraper bot = new DummyScraper(botContiguration);
             List<String> linksList = bot.ScrapeHtml();
             StrikeNews strikeNews;
+
             foreach (string link in linksList)
             {
-                strikeNews = new StrikeNews();
-                strikeNews.SourceLink = link;
-                _context.StrikeNews.Add(strikeNews);
-                _context.SaveChanges();
+                if (!StrikeNewsExists(link))
+                { 
+                    strikeNews = new StrikeNews();
+                    strikeNews.SourceLink = link;
+                    _context.StrikeNews.Add(strikeNews);
+                    _context.SaveChanges();
+                }
             }
-            return linksList.Count;
+            return Ok();
         }
 
         #endregion
+
+        #region "CRUD Operations"
 
         // GET: api/StrikeNews
         [HttpGet]
@@ -197,9 +160,16 @@ namespace StrikeSentinelAPI.Controllers
             return Ok(strikeNews);
         }
 
+        #endregion
+
         private bool StrikeNewsExists(int id)
         {
             return _context.StrikeNews.Any(e => e.StrikeNewsId == id);
+        }
+
+        private bool StrikeNewsExists(string sourceLink)
+        {
+            return _context.StrikeNews.Any(e => e.SourceLink == sourceLink);
         }
 
         private IConfiguration GetConfiguration(string fileName)
@@ -213,6 +183,51 @@ namespace StrikeSentinelAPI.Controllers
 
             return builder.Build();
         }
+
+        //TODO olhar para esta region e ver se já se pode apagar alguma coisa
+        #region "Sucata (coisas para descontinuar brevemente...)"
+
+        // GET: api/StrikeNews/search
+        [Obsolete]
+        [HttpGet("{command}")]
+        public string SearchStrikeNews([FromRoute] String command)
+        {
+            try
+            {
+                if (command == "search")
+                {
+                    List<String> news = DummyScraper.Scrape();
+                    StrikeNews strikeNews;
+                    foreach (string title in news)
+                    {
+                        strikeNews = new StrikeNews();
+                        strikeNews.SourceLink = title;
+                        _context.StrikeNews.Add(strikeNews);
+                        _context.SaveChanges();
+                    }
+                }
+                if (command == "searchv2")
+                {
+                    DummyScraper bot = new DummyScraper(GetConfiguration("scrapersettings.json"));
+                    List<String> news = bot.ScrapeHtml();
+                    StrikeNews strikeNews;
+                    foreach (string title in news)
+                    {
+                        strikeNews = new StrikeNews();
+                        strikeNews.SourceLink = title;
+                        _context.StrikeNews.Add(strikeNews);
+                        _context.SaveChanges();
+                    }
+                }
+                return command;
+            }
+            catch (Exception e)
+            {
+                return "Error: " + e.ToString();
+            }
+        }
+
+        #endregion
 
     }
 }
