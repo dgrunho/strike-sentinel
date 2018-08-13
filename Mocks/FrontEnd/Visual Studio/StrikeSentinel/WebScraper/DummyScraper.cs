@@ -93,7 +93,8 @@ namespace WebScraper
             string searchAddress, siteAddress, xpathLastArticles, xpathEachArticle;
             HtmlDocument htmlDoc;
             List<News> articlesList = new List<News>();
-            List<string> linksList;
+            List<News> articlesFromAllSourcesList = new List<News>();
+            List<string> linksToArticlesList;
 
             foreach (IConfigurationSection scraperSetting in scraperSettingsMembers)
             {
@@ -106,14 +107,14 @@ namespace WebScraper
                 
                     htmlDoc = ParseHtml(searchAddress);
 
-                    //TODO melhorar este código
-                    articlesList.AddRange(TraversingHtml(siteAddress, htmlDoc, xpathLastArticles, xpathEachArticle));
+                    articlesList = TraversingHtml(siteAddress, htmlDoc, xpathLastArticles, xpathEachArticle);
+                    articlesFromAllSourcesList.AddRange(articlesList);
                 }
             }
 
-            linksList = FilterResults(ref articlesList);
+            linksToArticlesList = FilterResults(ref articlesFromAllSourcesList);
 
-            return linksList;
+            return linksToArticlesList;
         }
 
         #endregion
