@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StrikeSentinel", "StrikeSentinel\StrikeSentinel.csproj", "{811F06C2-9BBE-44A0-99D1-02B5DC92DC82}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebScraper", "WebScraper\WebScraper.csproj", "{5988D4FA-D532-409B-8F92-59480ED99444}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StrikeSentinelAPI", "StrikeSentinelAPI\StrikeSentinelAPI.csproj", "{20FF6D01-C644-46CE-8EDF-CD170C81C030}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{811F06C2-9BBE-44A0-99D1-02B5DC92DC82}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{811F06C2-9BBE-44A0-99D1-02B5DC92DC82}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{811F06C2-9BBE-44A0-99D1-02B5DC92DC82}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5988D4FA-D532-409B-8F92-59480ED99444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5988D4FA-D532-409B-8F92-59480ED99444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5988D4FA-D532-409B-8F92-59480ED99444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5988D4FA-D532-409B-8F92-59480ED99444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20FF6D01-C644-46CE-8EDF-CD170C81C030}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20FF6D01-C644-46CE-8EDF-CD170C81C030}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20FF6D01-C644-46CE-8EDF-CD170C81C030}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20FF6D01-C644-46CE-8EDF-CD170C81C030}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
