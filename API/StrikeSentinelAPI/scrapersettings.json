@@ -1,0 +1,28 @@
+﻿{
+  "GeneralSettings": {
+    "ScraperInterval": "60",
+    "StrikeKeywords": ["GREVE","candidatura"]
+  },
+  "ScraperSettings": {
+    "PublicoScraper": {
+      "State": "on",
+      "SiteName": "Publico",
+      "SiteAddress": "https://www.publico.pt/",
+      "SearchAddress": "https://www.publico.pt/ultimas/",
+      "XPath": {
+        "LastArticles": "/html/body/div[1]/div[3]/main/div/div/section/div/div/div[2]/div/section[1]/ul/li[1]",
+        "EachArticle": "//article/div/div/div/h3/a"
+      }
+    },
+    "ObservadorScraper": {
+      "State":  "off",
+      "SiteName": "Observador",
+      "SiteAddress": "",
+      "SearchAddress":  "",
+      "XPath": {
+        "LastArticles": "",
+        "EachArticle": ""
+      }
+    }
+  }
+}
