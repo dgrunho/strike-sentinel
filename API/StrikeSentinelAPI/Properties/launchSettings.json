@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iis": {
-      "applicationUrl": "http://localhost/StrikeSentinelAPI",
+      "applicationUrl": "http://api.strike-sentinel.com/",
       "sslPort": 0
     },
     "iisExpress": {
@@ -23,7 +23,7 @@
     "StrikeSentinelAPI": {
       "commandName": "IIS",
       "launchBrowser": true,
-      "launchUrl": "api/values",
+      "launchUrl": "StrikeSentinelAPI/api/values",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

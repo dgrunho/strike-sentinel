@@ -76,11 +76,11 @@ namespace StrikeSentinelAPI.Controllers
             List<Greve> greves = new List<Greve>();
 
             DateTime Today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
-            greves.Add(new Greve("Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "Check", "Confirmada", "Green", "CP", "http://google.com"));
-            greves.Add(new Greve("Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "Cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com"));
-            greves.Add(new Greve("Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
-            greves.Add(new Greve("Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
-            greves.Add(new Greve("Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
+            greves.Add(new Greve("1", "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "Check", "Confirmada", "Green", "CP", "http://google.com"));
+            greves.Add(new Greve("2", "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "Cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com"));
+            greves.Add(new Greve("3", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
+            greves.Add(new Greve("4", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
+            greves.Add(new Greve("5", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
 
             return greves;
         }

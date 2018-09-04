@@ -9,8 +9,9 @@ namespace StrikeSentinelAPI.Models
     public class Greve
     {
 
-        public Greve(string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, string estado, string estadodescr, string cor, string empresa, string sourcelink)
+        public Greve(string id,string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, string estado, string estadodescr, string cor, string empresa, string sourcelink)
         {
+            Id = id;
             Tipo = tipo;
             DataInicio = datainicio;
             DataFim = datafim;
@@ -22,6 +23,19 @@ namespace StrikeSentinelAPI.Models
             Empresa = empresa;
             SourceLink = sourcelink;
             SetDateName();
+        }
+
+        string _Id;
+        public string Id
+        {
+            get { return _Id; }
+            set
+            {
+                if (_Id != value)
+                {
+                    _Id = value;
+                }
+            }
         }
 
         string _Tipo;
