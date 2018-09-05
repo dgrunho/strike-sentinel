@@ -10,6 +10,11 @@ import android.widget.TextView
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+import com.android.volley.Request
+import com.android.volley.toolbox.StringRequest
+import org.json.JSONException
+import org.json.JSONObject
+import org.json.JSONArray
 
 
 
@@ -18,7 +23,6 @@ import android.widget.Toast;
 class MainActivity : AppCompatActivity() {
 
     var listView: ListView? = null
-    var restService: RestService = RestService()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,32 +31,55 @@ class MainActivity : AppCompatActivity() {
 
     //This function will call when the screen is activate
     fun onClick(v: View) {
-        refreshScreen()
+        refreshScreenVolley()
     }
+    private fun refreshScreenVolley() {
+        val stringRequest = StringRequest(Request.Method.GET,
+                EndPoints.URL_GET_ARTIST,
+                com.android.volley.Response.Listener<String> { s ->
+                    try {
+                        val array = JSONArray(s)
+                        Toast.makeText(getApplicationContext(), array.toString(), Toast.LENGTH_LONG).show()
 
-    private fun refreshScreen() {
-        //Call to server to grab list of student records. this is a asyn
-        restService.service.getStrike(object : Callback<List<Strike>> {
-            override fun success(students: List<Strike>, response: Response) {
-                val lv = findViewById<View>(R.id.listView) as ListView
+                        //val array = obj.getJSONArray("artists")
+                        var ListStrike: MutableList<Strike> = mutableListOf<Strike>()
+                        for (i in 0..array.length() - 1) {
+                            val objectArtist = array.getJSONObject(i)
+                            val artist = Strike()
+                            artist.tipo = objectArtist.getString("tipo")
+                            artist.empresa = objectArtist.getString("empresa")
 
-                val customAdapter = CustomAdapter(this@MainActivity, R.layout.view_strike_entry, students)
+                            ListStrike.add(artist)
+                            val lv = findViewById<View>(R.id.listView) as ListView
 
-                /*lv.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
-                    student_Id = view.findViewById(R.id.student_Id) as TextView
-                    val studentId = student_Id.getText().toString()
-                    val objIndent = Intent(applicationContext, StudentDetail::class.java)
-                    objIndent.putExtra("student_Id", Integer.parseInt(studentId))
-                    startActivity(objIndent)
-                }*/
-                lv.adapter = customAdapter
-            }
+                            val customAdapter = CustomAdapter(this@MainActivity, R.layout.view_strike_entry, ListStrike)
 
-            override fun failure(error: RetrofitError) {
-                Toast.makeText(this@MainActivity, error.message.toString(), Toast.LENGTH_LONG).show()
-            }
-        })
+                            lv.adapter = customAdapter
+                        }
 
+                        /*if (!obj.getBoolean("error")) {
+                            val array = obj.getJSONArray("artists")
+                            var ListStrike: MutableList<Strike> = mutableListOf<Strike>()
+                            for (i in 0..array.length() - 1) {
+                                val objectArtist = array.getJSONObject(i)
+                                val artist = Strike()
+                                artist.tipo = objectArtist.getString("tipo")
+                                artist.empresa = objectArtist.getString("empresa")
 
+                                ListStrike.add(artist)
+                                val lv = findViewById<View>(R.id.listView) as ListView
+
+                                val customAdapter = CustomAdapter(this@MainActivity, R.layout.view_strike_entry, ListStrike)
+
+                                lv.adapter = customAdapter
+                            }
+                        } else {
+                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show()
+                        }*/
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+                }, com.android.volley.Response.ErrorListener { volleyError -> Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show()})
+        VolleySingleton.instance?.addToRequestQueue(stringRequest)
     }
 }
