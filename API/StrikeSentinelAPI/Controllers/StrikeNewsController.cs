@@ -104,6 +104,46 @@ namespace StrikeSentinelAPI.Controllers
             return Ok(strikeNews);
         }
 
+        // GET: api/StrikeNews/Icon/5
+        [HttpGet("Icon/{id}")]
+        public async Task<IActionResult> GetIcon([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var webRoot = _env.ContentRootPath;
+            var file = System.IO.Path.Combine(webRoot, "Images\\web_hi_res_512.png");
+            var image = System.IO.File.OpenRead(file);
+            return await Task.Run(() => File(image, "image/png"));
+
+            //var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
+
+            //if (strikeNews == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return Ok(strikeNews);
+        }
+
+        // GET: api/StrikeNews/Path/5
+        [HttpGet("Ico")]
+        public async Task<string> GetPath()
+        {
+            var webRoot = _env.ContentRootPath;
+            return webRoot;
+
+            //var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
+
+            //if (strikeNews == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return Ok(strikeNews);
+        }
+
         // PUT: api/StrikeNews/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutStrikeNews([FromRoute] int id, [FromBody] StrikeNews strikeNews)

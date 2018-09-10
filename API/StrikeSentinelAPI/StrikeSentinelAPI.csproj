@@ -5,6 +5,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\web_hi_res_512.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Images\web_hi_res_512.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Publish Configuration\" />
     <Folder Include="wwwroot\" />
   </ItemGroup>
