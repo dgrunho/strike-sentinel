@@ -4,11 +4,16 @@ import android.app.Application
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.Volley
+import com.android.volley.toolbox.ImageLoader
+
+
 
 /**
  * Created by Belal on 5/16/2017.
  */
 class VolleySingleton : Application() {
+
+
     override fun onCreate() {
         super.onCreate()
         instance = this
@@ -21,6 +26,11 @@ class VolleySingleton : Application() {
             }
             return field
         }
+
+    val imageLoader: ImageLoader
+        get() {
+        return ImageLoader(requestQueue, LruBitmapCache())
+    }
 
     fun <T> addToRequestQueue(request: Request<T>) {
         request.tag = TAG

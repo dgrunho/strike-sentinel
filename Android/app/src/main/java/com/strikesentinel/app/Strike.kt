@@ -1,7 +1,9 @@
 package com.strikesentinel.app
 
-class Strike {
+import org.json.JSONObject
 
+class Strike(strikeJSON: JSONObject) {
+    var id: String? = null
     var tipo: String? = null
     var dataInicio: String? = null
     var dataFim: String? = null
@@ -13,5 +15,20 @@ class Strike {
     var empresa: String? = null
     var sourceLink: String? = null
     var dateGroup: String? = null
+
+    init {
+        id = strikeJSON.getString("id")
+        tipo = strikeJSON.getString("tipo")
+        dataInicio = strikeJSON.getString("dataInicio")
+        dataFim = strikeJSON.getString("dataFim")
+        observacoes = strikeJSON.getString("observacoes")
+        todoDia = strikeJSON.getString("todoDia")
+        estado = strikeJSON.getString("estado")
+        estadoDescr = strikeJSON.getString("estadoDescr")
+        cor = strikeJSON.getString("cor")
+        empresa = strikeJSON.getString("empresa")
+        sourceLink = strikeJSON.getString("sourceLink")
+        dateGroup = strikeJSON.getString("dateGroup")
+    }
 
 }

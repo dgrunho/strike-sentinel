@@ -10,11 +10,13 @@ import android.widget.TextView
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
+import android.widget.ProgressBar;
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONArray
+import com.android.volley.toolbox.NetworkImageView;
 
 
 
@@ -29,53 +31,30 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
-    //This function will call when the screen is activate
-    fun onClick(v: View) {
+    override fun onResume() {
+        super.onResume()
         refreshScreenVolley()
     }
+
     private fun refreshScreenVolley() {
+        val pb = findViewById<View>(R.id.pbLoad) as ProgressBar
+        pb.isIndeterminate = true
+        pb.setVisibility(ProgressBar.VISIBLE);
         val stringRequest = StringRequest(Request.Method.GET,
-                EndPoints.URL_GET_ARTIST,
+                EndPoints.URL_GET_STRIKES,
                 com.android.volley.Response.Listener<String> { s ->
                     try {
                         val array = JSONArray(s)
-                        Toast.makeText(getApplicationContext(), array.toString(), Toast.LENGTH_LONG).show()
-
-                        //val array = obj.getJSONArray("artists")
                         var ListStrike: MutableList<Strike> = mutableListOf<Strike>()
-                        for (i in 0..array.length() - 1) {
-                            val objectArtist = array.getJSONObject(i)
-                            val artist = Strike()
-                            artist.tipo = objectArtist.getString("tipo")
-                            artist.empresa = objectArtist.getString("empresa")
-
-                            ListStrike.add(artist)
-                            val lv = findViewById<View>(R.id.listView) as ListView
-
-                            val customAdapter = CustomAdapter(this@MainActivity, R.layout.view_strike_entry, ListStrike)
-
-                            lv.adapter = customAdapter
+                        for (i in 0..array.length() - 1 - 1) {
+                            ListStrike.add(Strike(array.getJSONObject(i)))
                         }
 
-                        /*if (!obj.getBoolean("error")) {
-                            val array = obj.getJSONArray("artists")
-                            var ListStrike: MutableList<Strike> = mutableListOf<Strike>()
-                            for (i in 0..array.length() - 1) {
-                                val objectArtist = array.getJSONObject(i)
-                                val artist = Strike()
-                                artist.tipo = objectArtist.getString("tipo")
-                                artist.empresa = objectArtist.getString("empresa")
+                        val lv = findViewById<View>(R.id.listView) as ListView
+                        val customAdapter = CustomAdapter(this@MainActivity, R.layout.view_strike_entry, ListStrike)
+                        lv.adapter = customAdapter
 
-                                ListStrike.add(artist)
-                                val lv = findViewById<View>(R.id.listView) as ListView
-
-                                val customAdapter = CustomAdapter(this@MainActivity, R.layout.view_strike_entry, ListStrike)
-
-                                lv.adapter = customAdapter
-                            }
-                        } else {
-                            Toast.makeText(getApplicationContext(), obj.getString("message"), Toast.LENGTH_LONG).show()
-                        }*/
+                        pb.setVisibility(ProgressBar.INVISIBLE);
                     } catch (e: JSONException) {
                         e.printStackTrace()
                     }

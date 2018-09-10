@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent">
     <TextView
         android:id="@+id/tipo"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone" />
+        android:layout_height="wrap_content" />
 
     <TextView
         android:id="@+id/dataInicio"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="6dip"
+        android:paddingRight="6dip"
         android:paddingTop="6dip"
         android:textSize="22sp"
         android:textStyle="bold" />
+
+    <com.android.volley.toolbox.NetworkImageView
+        android:id="@+id/imIcon"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        />
 
 </LinearLayout>
