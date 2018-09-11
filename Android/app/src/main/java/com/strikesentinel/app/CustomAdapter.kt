@@ -20,9 +20,11 @@ import com.android.volley.toolbox.ImageRequest
 import com.android.volley.toolbox.NetworkImageView;
 import com.android.volley.toolbox.Volley
 import com.android.volley.toolbox.ImageLoader
+import kotlinx.android.synthetic.main.view_strike_entry.view.*
 
 
 class CustomAdapter(context: Context, resource: Int, student: List<Strike>) : ArrayAdapter<Strike>(context, resource, student) {
+
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
 
         var v = convertView
@@ -61,9 +63,17 @@ class CustomAdapter(context: Context, resource: Int, student: List<Strike>) : Ar
 
         val strike = getItem(position)
 
-        val Img = v!!.findViewById(R.id.imIcon) as NetworkImageView
 
-        Img.setImageUrl("http://loremflickr.com/800/600/cat?random=1",VolleySingleton.instance?.imageLoader);
+
+
+        val imageUrl = "https://raw.githubusercontent.com/AndroidCodility/Picasso-RecyclerView/master/images/marshmallow.png"
+        VolleySingleton.instance?.addToRequestQueue(ImageRequest(imageUrl, Response.Listener<Bitmap> { response ->
+            v.networkImageView2.setImageBitmap(response)
+           // val Img = v!!.findViewById(R.id.networkImageView) as NetworkImageView
+            //Img.setImageBitmap(response)
+        }, 0, 0, null, Response.ErrorListener { error ->
+            Toast.makeText(context, error.message, Toast.LENGTH_SHORT).show()
+        }))
 
         /*val request = ImageRequest("http://loremflickr.com/800/600/cat?random=1",
                 Listener { bitmap -> try {

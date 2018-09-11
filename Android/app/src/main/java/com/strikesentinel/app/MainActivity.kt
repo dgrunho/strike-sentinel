@@ -3,10 +3,6 @@ package com.strikesentinel.app
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 
-import retrofit.Callback;
-import retrofit.RetrofitError;
-import retrofit.client.Response;
-import android.widget.TextView
 import android.view.View;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -17,18 +13,23 @@ import org.json.JSONException
 import org.json.JSONObject
 import org.json.JSONArray
 import com.android.volley.toolbox.NetworkImageView;
-
-
-
+import com.android.volley.Response
+import com.android.volley.toolbox.ImageRequest
+import com.android.volley.toolbox.Volley
+import android.graphics.Bitmap
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
     var listView: ListView? = null
+    private val imageUrl = "https://raw.githubusercontent.com/AndroidCodility/Picasso-RecyclerView/master/images/marshmallow.png"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true);
     }
 
     override fun onResume() {

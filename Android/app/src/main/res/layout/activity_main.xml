@@ -13,6 +13,7 @@
         android:layout_height="462dp"
         android:alpha="0.05"
         android:contentDescription="@string/imagem_fundo_description"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.50"
@@ -20,7 +21,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.50"
         app:srcCompat="@drawable/ciber_owl" />
-
+    <ImageView
+        android:id="@+id/networkImageView"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_below="@+id/imageView"
+        android:layout_marginEnd="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp" />
     <ListView
         android:id="@+id/listView"
         android:layout_width="wrap_content"
