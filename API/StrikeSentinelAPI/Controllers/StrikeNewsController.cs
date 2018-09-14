@@ -81,8 +81,36 @@ namespace StrikeSentinelAPI.Controllers
             greves.Add(new Greve("3", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
             greves.Add(new Greve("4", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
             greves.Add(new Greve("5", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
+            greves.Add(new Greve("6", "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "Check", "Confirmada", "Green", "CP", "http://google.com"));
+            greves.Add(new Greve("7", "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "Cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com"));
+            greves.Add(new Greve("8", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
+            greves.Add(new Greve("9", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
+            greves.Add(new Greve("10", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
 
             return greves;
+        }
+
+        [HttpGet("GroupDummy")]
+        public List<GroupGreve> GetStrikeNewsGroupDummy()
+        {
+            List<Greve> greves = GetStrikeNewsDummy();
+            List<GroupGreve> group_greves = new List<GroupGreve>();
+            int id_group = 1;
+            foreach (Greve greve in greves)
+            {
+                GroupGreve objGroup;
+                objGroup = group_greves.Find(x => (x.Name == greve.DateGroup));
+                if (objGroup == null)
+                {
+                    group_greves.Add(new GroupGreve(id_group.ToString(), greve.DateGroup, greve));
+                    id_group += 1;
+                } else
+                {
+                    objGroup.Greves.Add(greve);
+                }
+            }
+
+            return group_greves;
         }
 
         // GET: api/StrikeNews/5

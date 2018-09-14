@@ -210,4 +210,67 @@ namespace StrikeSentinelAPI.Models
         }
 
     }
+
+    public class GroupGreve
+    {
+
+        public GroupGreve(string id, string name)
+        {
+            Id = id;
+            Name = name;
+        }
+
+        public GroupGreve(string id, string name, Greve greve)
+        {
+            Id = id;
+            Name = name;
+            Greves.Add(greve);
+        }
+
+        public GroupGreve(string id, string name, List<Greve> greves)
+        {
+            Id = id;
+            Name = name;
+            Greves.AddRange(greves.ToArray());
+        }
+
+        string _Id;
+        public string Id
+        {
+            get { return _Id; }
+            set
+            {
+                if (_Id != value)
+                {
+                    _Id = value;
+                }
+            }
+        }
+
+        string _Name;
+        public string Name
+        {
+            get { return _Name; }
+            set
+            {
+                if (_Name != value)
+                {
+                    _Name = value;
+                }
+            }
+        }
+
+        List<Greve> _Greves = new List<Greve>();
+        public List<Greve> Greves
+        {
+            get { return _Greves; }
+            set
+            {
+                if (_Greves != value)
+                {
+                    _Greves = value;
+                }
+            }
+        }
+    }
 }
