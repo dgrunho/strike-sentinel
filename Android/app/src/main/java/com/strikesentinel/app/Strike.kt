@@ -32,3 +32,10 @@ class Strike(strikeJSON: JSONObject) {
     }
 
 }
+
+class StrikeGroup(strikeJSON: JSONObject) {
+    var id: String? = null
+    var name: String? = null
+    var greves: List<Strike>? = null
+
+}

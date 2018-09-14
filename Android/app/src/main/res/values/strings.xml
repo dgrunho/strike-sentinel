@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Strike Sentinel</string>
     <string name="imagem_fundo_description">Imagem de Fundo</string>
+    <string name="settings_menu">Definições</string>
 </resources>
