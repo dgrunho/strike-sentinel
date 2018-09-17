@@ -16,6 +16,6 @@ class RestService {
     companion object {
         //You need to change the IP if you testing environment is not local machine
         //or you may have different URL than we have here
-        private val URL = "http://strikesentinel-dev.ddns.net/api/"
+        public val URL = "http://strikesentinel-dev.ddns.net/api/"
     }
 }
