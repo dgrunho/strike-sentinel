@@ -140,19 +140,50 @@ namespace StrikeSentinelAPI.Controllers
             {
                 return BadRequest(ModelState);
             }
+
             var webRoot = _env.ContentRootPath;
-            var file = System.IO.Path.Combine(webRoot, "Images\\web_hi_res_512.png");
+            var file = "";
+            
+
+            switch (id)
+{
+                case 1:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CP.png");
+                    break;
+                case 2:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Metro.png");
+                    break;
+                case 3:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Carris.jpg");
+                    break;
+                case 4:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.png");
+                    break;
+                case 5:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professores.png");
+                    break;
+                case 6:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CP.png");
+                    break;
+                case 7:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Metro.png");
+                    break;
+                case 8:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Carris.jpg");
+                    break;
+                case 9:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.png");
+                    break;
+                case 10:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professor.png");
+                    break;
+                default:
+                    file = System.IO.Path.Combine(webRoot, "Images\\web_hi_res_512.png");
+                    break;
+            }
+
             var image = System.IO.File.OpenRead(file);
             return await Task.Run(() => File(image, "image/png"));
-
-            //var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
-
-            //if (strikeNews == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return Ok(strikeNews);
         }
 
         // GET: api/StrikeNews/Path/5

@@ -182,6 +182,7 @@ namespace StrikeSentinelAPI.Models
             }
         }
 
+
         void SetDateName()
         {
             TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
