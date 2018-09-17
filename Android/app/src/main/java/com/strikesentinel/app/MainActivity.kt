@@ -52,11 +52,9 @@ class MainActivity : AppCompatActivity() {
 
     private fun refreshScreen() {
         pbLoad.setVisibility(View.VISIBLE)
-        //Call to server to grab list of student records. this is a asyn
         restService.service.getStrikeGroup(object : Callback<List<StrikeGroup>> {
             override fun success(strikegroups: List<StrikeGroup>, response: Response) {
-                //val adapter = CustomAdapterGroups(this@MainActivity, R.layout.strike_entry, strikegroups)
-                lvStrikes.adapter = CustomAdapterGroups(this@MainActivity, R.layout.strike_entry_header, strikegroups)
+                lvStrikes.adapter = StrikeGroupAdapter(this@MainActivity, R.layout.strike_entry_header, strikegroups)
                 pbLoad.setVisibility(View.GONE)
             }
 
@@ -65,19 +63,5 @@ class MainActivity : AppCompatActivity() {
                 pbLoad.setVisibility(View.GONE)
             }
         })
-        /*restService.service.getStrike(object : Callback<List<Strike>> {
-            override fun success(students: List<Strike>, response: Response) {
-                val adapter = CustomAdapter(this@MainActivity, R.layout.strike_entry, students)
-                lvStrikes.adapter = CustomAdapter(this@MainActivity, R.layout.strike_entry, students)
-                pbLoad.setVisibility(View.GONE)
-            }
-
-            override fun failure(error: RetrofitError) {
-                Toast.makeText(this@MainActivity, error.message.toString(), Toast.LENGTH_LONG).show()
-                pbLoad.setVisibility(View.GONE)
-            }
-        })*/
-
-
     }
 }

@@ -18,7 +18,7 @@ import java.time.format.FormatStyle
 import java.util.*
 
 
-class CustomAdapter(context: Context, resource: Int, strikes: List<Strike>) : ArrayAdapter<Strike>(context, resource, strikes) {
+class StrikeEntryAdapter(context: Context, resource: Int, strikes: List<Strike>) : ArrayAdapter<Strike>(context, resource, strikes) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
 
@@ -71,7 +71,7 @@ class CustomAdapter(context: Context, resource: Int, strikes: List<Strike>) : Ar
     }
 }
 
-class CustomAdapterGroups(context: Context, resource: Int, strikes: List<StrikeGroup>) : ArrayAdapter<StrikeGroup>(context, resource, strikes) {
+class StrikeGroupAdapter(context: Context, resource: Int, strikes: List<StrikeGroup>) : ArrayAdapter<StrikeGroup>(context, resource, strikes) {
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View? {
 
@@ -90,7 +90,7 @@ class CustomAdapterGroups(context: Context, resource: Int, strikes: List<StrikeG
             groupName.setText(strike_group.name)
 
             val lv = v!!.findViewById(R.id.lvStrikes) as ListView
-            lv.adapter = CustomAdapter(context, R.layout.strike_entry, strike_group.greves!!.toList())
+            lv.adapter = StrikeEntryAdapter(context, R.layout.strike_entry, strike_group.greves!!.toList())
         }
 
         return v
