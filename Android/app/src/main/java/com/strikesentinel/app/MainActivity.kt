@@ -38,6 +38,8 @@ class MainActivity : AppCompatActivity() {
         lvStrikes.onItemClickListener = AdapterView.OnItemClickListener { parent, view, position, id ->
             Toast.makeText(this@MainActivity, "Click", Toast.LENGTH_LONG).show()
         }
+        refreshScreen()
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -45,9 +47,14 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
+    override fun onStart() {
+        super.onStart()
+
+    }
+
     override fun onResume() {
         super.onResume()
-        refreshScreen()
+
     }
 
     private fun refreshScreen() {

@@ -7,13 +7,17 @@
     android:orientation="horizontal"
     android:padding="6dp">
 
+    <TextView
+        android:id="@+id/idStrike"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"/>
+
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_margin="2dp"
-        android:contentDescription="@string/imagem_fundo_description"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_margin="2dp"/>
 
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
