@@ -1,7 +1,7 @@
 ﻿{
   "GeneralSettings": {
     "ScraperInterval": "60",
-    "StrikeKeywords": ["GREVE","candidatura"]
+    "StrikeKeywords": ["GREVE","candidatura","o","a"]
   },
   "ScraperSettings": {
     "PublicoScraper": {
