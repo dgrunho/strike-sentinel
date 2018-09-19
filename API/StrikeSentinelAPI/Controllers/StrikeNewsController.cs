@@ -81,8 +81,36 @@ namespace StrikeSentinelAPI.Controllers
             greves.Add(new Greve("3", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
             greves.Add(new Greve("4", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
             greves.Add(new Greve("5", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
+            greves.Add(new Greve("6", "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "Check", "Confirmada", "Green", "CP", "http://google.com"));
+            greves.Add(new Greve("7", "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "Cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com"));
+            greves.Add(new Greve("8", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
+            greves.Add(new Greve("9", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
+            greves.Add(new Greve("10", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
 
             return greves;
+        }
+
+        [HttpGet("GroupDummy")]
+        public List<GroupGreve> GetStrikeNewsGroupDummy()
+        {
+            List<Greve> greves = GetStrikeNewsDummy();
+            List<GroupGreve> group_greves = new List<GroupGreve>();
+            int id_group = 1;
+            foreach (Greve greve in greves)
+            {
+                GroupGreve objGroup;
+                objGroup = group_greves.Find(x => (x.Name == greve.DateGroup));
+                if (objGroup == null)
+                {
+                    group_greves.Add(new GroupGreve(id_group.ToString(), greve.DateGroup, greve));
+                    id_group += 1;
+                } else
+                {
+                    objGroup.Greves.Add(greve);
+                }
+            }
+
+            return group_greves;
         }
 
         // GET: api/StrikeNews/5
@@ -102,6 +130,77 @@ namespace StrikeSentinelAPI.Controllers
             }
 
             return Ok(strikeNews);
+        }
+
+        // GET: api/StrikeNews/Icon/5
+        [HttpGet("Icon/{id}")]
+        public async Task<IActionResult> GetIcon([FromRoute] int id)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var webRoot = _env.ContentRootPath;
+            var file = "";
+            
+
+            switch (id)
+{
+                case 1:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CP.png");
+                    break;
+                case 2:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Metro.png");
+                    break;
+                case 3:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Carris.jpg");
+                    break;
+                case 4:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.png");
+                    break;
+                case 5:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professores.png");
+                    break;
+                case 6:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CP.png");
+                    break;
+                case 7:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Metro.png");
+                    break;
+                case 8:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Carris.jpg");
+                    break;
+                case 9:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.svg");
+                    break;
+                case 10:
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professor.png");
+                    break;
+                default:
+                    file = System.IO.Path.Combine(webRoot, "Images\\web_hi_res_512.png");
+                    break;
+            }
+
+            var image = System.IO.File.OpenRead(file);
+            return await Task.Run(() => File(image, "image/png"));
+        }
+
+        // GET: api/StrikeNews/Path/5
+        [HttpGet("Ico")]
+        public async Task<string> GetPath()
+        {
+            var webRoot = _env.ContentRootPath;
+            return webRoot;
+
+            //var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
+
+            //if (strikeNews == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return Ok(strikeNews);
         }
 
         // PUT: api/StrikeNews/5
