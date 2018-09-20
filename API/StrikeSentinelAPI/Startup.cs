@@ -50,6 +50,7 @@ namespace StrikeSentinelAPI
             }
 
             app.UseMvc();
+            app.UseFileServer();
         }
     }
 }

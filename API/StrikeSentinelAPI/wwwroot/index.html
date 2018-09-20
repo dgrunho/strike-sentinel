@@ -1,0 +1,159 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>Strike Sentinel</title>
+    <link rel="icon" href="/images/favicon.ico">
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+
+    <style type="text/css">
+        .sidenav, .sidenav-overlay {
+            top: 65px;
+        }
+
+        .active .collapsible-body {
+            border-bottom: 0px
+        }
+        .active .collapsible-header {
+            display: none
+        }
+        
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        main {
+            flex: 1 0 auto;
+        }
+    </style>
+</head>
+<body onclick="clickbody()">
+
+    <header>
+        <div class="navbar-fixed">
+            <nav class="blue lighten-1" role="navigation">
+                <div class="nav-wrapper">
+                    <div class="brand-logo">
+                        <a href="#" data-target="nav-mobile" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+                        Strike Sentinel
+
+                    </div>
+                    <form class="right">
+
+                        <div class="input-field">
+
+
+                            <input id="search" type="search" required>
+                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                            <i class="material-icons">close</i>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container" id="strikes-container">
+            <div rv-each-group="groups">
+                { group.name }
+                <ul class="collapsible popout" onclick="event.stopPropagation()">
+                    <li rv-each-greve="group.greves" >
+                        <div class="collapsible-header"><i class="material-icons">place</i>{ greve.empresa }</div>
+                        <div class="collapsible-body card blue-grey darken-1">
+
+ 
+                                <div class="card-content white-text">
+                                    <span class="card-title">Card Title</span>
+                                    <p>
+                                        I am a very simple card. I am good at containing small bits of information.
+                                        I am convenient because I require little markup to use effectively.
+                                    </p>
+                                </div>
+                                <div class="card-action">
+                                    <a href="#">This is a link</a>
+                                    <a href="#">This is a link</a>
+                                </div>
+
+
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer class="page-footer orange">
+        <div class="container">
+            <div class="row">
+                <div class="col l6 s12">
+                    <h5 class="white-text">Company Bio</h5>
+                    <p class="grey-text text-lighten-4">We are a team of college students working on this project like it's our full time job. Any amount would help support and continue development on this project and is greatly appreciated.</p>
+
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Settings</h5>
+                    <ul>
+                        <li><a class="white-text" href="#!">Link 1</a></li>
+                        <li><a class="white-text" href="#!">Link 2</a></li>
+                        <li><a class="white-text" href="#!">Link 3</a></li>
+                        <li><a class="white-text" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+                <div class="col l3 s12">
+                    <h5 class="white-text">Connect</h5>
+                    <ul>
+                        <li><a class="white-text" href="#!">Link 1</a></li>
+                        <li><a class="white-text" href="#!">Link 2</a></li>
+                        <li><a class="white-text" href="#!">Link 3</a></li>
+                        <li><a class="white-text" href="#!">Link 4</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="footer-copyright">
+            <div class="container">
+                Made by <a class="orange-text text-lighten-3" href="http://materializecss.com">Materialize</a>
+            </div>
+        </div>
+    </footer>
+
+    <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">Navbar Link2</a></li>
+    </ul>
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/rivets.bundled.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+
+    <script>
+        var groups = [{ "id": "1", "name": "Hoje", "greves": [{ "id": "1", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "Check", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }, { "id": "6", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "Check", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }] }, { "id": "2", "name": "Amanhã", "greves": [{ "id": "2", "tipo": "Metro", "dataInicio": "2018-09-21T00:00:00", "dataFim": "2018-09-22T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "Cancel", "estadoDescr": "Cancelada", "cor": "Red", "empresa": "Metro de Lisboa", "sourceLink": "http://google.com", "dateGroup": "Amanhã" }, { "id": "7", "tipo": "Metro", "dataInicio": "2018-09-21T00:00:00", "dataFim": "2018-09-22T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "Cancel", "estadoDescr": "Cancelada", "cor": "Red", "empresa": "Metro de Lisboa", "sourceLink": "http://google.com", "dateGroup": "Amanhã" }] }, { "id": "3", "name": "Setembro", "greves": [{ "id": "3", "tipo": "Autocarro", "dataInicio": "2018-09-22T10:00:00", "dataFim": "2018-09-22T14:00:00", "observacoes": "bla bla", "todoDia": false, "estado": "Help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Carris", "sourceLink": "http://google.com", "dateGroup": "Setembro" }, { "id": "4", "tipo": "Hospitais", "dataInicio": "2018-09-25T12:24:52.9611517+01:00", "dataFim": "2018-09-27T16:24:52.9611563+01:00", "observacoes": "bla bla", "todoDia": false, "estado": "Help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Centro Hospitalar do médio Tejo", "sourceLink": "http://google.com", "dateGroup": "Setembro" }, { "id": "8", "tipo": "Autocarro", "dataInicio": "2018-09-22T10:00:00", "dataFim": "2018-09-22T14:00:00", "observacoes": "bla bla", "todoDia": false, "estado": "Help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Carris", "sourceLink": "http://google.com", "dateGroup": "Setembro" }, { "id": "9", "tipo": "Hospitais", "dataInicio": "2018-09-25T12:24:52.9613595+01:00", "dataFim": "2018-09-27T16:24:52.9613646+01:00", "observacoes": "bla bla", "todoDia": false, "estado": "Help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Centro Hospitalar do médio Tejo", "sourceLink": "http://google.com", "dateGroup": "Setembro" }] }, { "id": "4", "name": "Outubro", "greves": [{ "id": "5", "tipo": "Educação", "dataInicio": "2018-10-10T12:24:52.9612054+01:00", "dataFim": "2018-10-11T12:24:52.96121+01:00", "observacoes": "bla bla", "todoDia": true, "estado": "Help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Professores", "sourceLink": "http://google.com", "dateGroup": "Outubro" }, { "id": "10", "tipo": "Educação", "dataInicio": "2018-10-10T12:24:52.9614102+01:00", "dataFim": "2018-10-11T12:24:52.9614148+01:00", "observacoes": "bla bla", "todoDia": true, "estado": "Help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Professores", "sourceLink": "http://google.com", "dateGroup": "Outubro" }] }]
+       
+        rivets.bind(
+            document.querySelector('#strikes-container'),
+            {
+                groups: groups 
+            });
+
+
+        function clickbody() {
+            var elems = document.querySelectorAll('.collapsible');
+            for (var i = 0; i < elems.length; i++) {
+                var instance = M.Collapsible.getInstance(elems[i]);
+                for (var j = 0; j < instance.el.children.length; j++) {
+                    instance.close(j)
+                }
+            }
+        }
+    </script>
+</body>
+</html>

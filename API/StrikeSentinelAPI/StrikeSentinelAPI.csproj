@@ -44,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Publish Configuration\" />
-    <Folder Include="wwwroot\" />
   </ItemGroup>
 
   <ItemGroup>
