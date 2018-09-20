@@ -1,0 +1,411 @@
+<!doctype html>
+<!--
+  Copyright 2018 Strike Sentinel. All rights reserved.
+-->
+<html lang="pt">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Agregador de greves em Portugal.">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>Strike Sentinel</title>
+
+  <link rel="shortcut icon" href="images/favicon.png">
+
+  <!-- Page styles -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="css/lib/material.min.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <style>
+    /* TODO colocar num ficheiro CSS*/
+    #view-source {
+      position: fixed;
+      display: block;
+      right: 0;
+      bottom: 0;
+      margin-right: 40px;
+      margin-bottom: 40px;
+      z-index: 900;
+    }
+
+    .demo-data-table {
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body class="mdl-demo mdl-color--grey-100 mdl-color-text--grey-700 mdl-base">
+  <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <header class="mdl-layout__header mdl-layout__header--scroll mdl-color--primary">
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+        <h3>Name &amp; Title</h3>
+      </div>
+      <div class="mdl-layout--large-screen-only mdl-layout__header-row">
+      </div>
+      <div class="mdl-layout__tab-bar mdl-js-ripple-effect mdl-color--primary-dark">
+        <a href="#overview" class="mdl-layout__tab is-active">Overview</a>
+        <a href="#features" class="mdl-layout__tab">Features</a>
+        <a href="#features" class="mdl-layout__tab">Details</a>
+        <a href="#features" class="mdl-layout__tab">Technology</a>
+        <a href="#features" class="mdl-layout__tab">FAQ</a>
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored mdl-shadow--4dp mdl-color--accent"
+          id="add">
+          <i class="material-icons" role="presentation">add</i>
+          <span class="visuallyhidden">Add</span>
+        </button>
+      </div>
+    </header>
+    <main class="mdl-layout__content">
+      <div class="mdl-layout__tab-panel is-active" id="overview">
+
+        <!-- Strike List -->
+        <section id="strike-list" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__supporting-text">
+              <h4>Lista</h4>
+              <table class="demo-data-table mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp">
+                <tbody>
+                  <tr>
+                    <td>
+                      <img src="images/cp_logo.png" />
+                    </td>
+                    <td>CP</td>
+                    <td>17-09-2018 > 17-09-2018</td>
+                    <td>
+                      <i class="material-icons">done</i>
+                    </td>
+                    <td>
+                      <a id="btn-strike" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Detalhes
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="images/metro_logo.png" />
+                    </td>
+                    <td>Metro de Lisboa</td>
+                    <td>18-09-2018 > 18-09-2018</td>
+                    <td>
+                      <i class="material-icons">cancel</i>
+                    </td>
+                    <td>
+                      <a id="btn-strike" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Detalhes
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="images/carris_logo.png" />
+                    </td>
+                    <td>CP</td>
+                    <td>19-09-2018 10:00 > 19-09-2018 19:00</td>
+                    <td>
+                      <i class="material-icons">help</i>
+                    </td>
+                    <td>
+                      <a id="btn-strike" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Detalhes
+                      </a>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <img src="images/chmt_logo.png" />
+                    </td>
+                    <td>Centro Hospitalar do Médio Tejo</td>
+                    <td>22-09-2018 16:49 > 24-09-2018 20:59</td>
+                    <td>
+                      <i class="material-icons">help</i>
+                    </td>
+                    <td>
+                      <a id="btn-strike" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Detalhes
+                      </a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div id="strike-list-table"></div>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Todos</li>
+            <li class="mdl-menu__item" disabled>Transpostes</li>
+            <li class="mdl-menu__item">Educação</li>
+            <li class="mdl-menu__item">Saúde</li>
+          </ul>
+        </section>
+
+        <!-- Strike Detail -->
+        <section id="strike-detail" class="section--center mdl-grid mdl-grid--no-spacing mdl-shadow--2dp">
+          <div class="mdl-card mdl-cell mdl-cell--12-col">
+            <div class="mdl-card__supporting-text">
+              <h4>Detalhe</h4>
+              Dolore ex deserunt aute fugiat aute nulla ea sunt aliqua nisi cupidatat eu. Nostrud in laboris labore nisi amet do dolor
+              eu fugiat consectetur elit cillum esse. Pariatur occaecat nisi laboris tempor laboris eiusmod qui id Lorem
+              esse commodo in. Exercitation aute dolore deserunt culpa consequat elit labore incididunt elit anim.
+            </div>
+            <div class="mdl-card__actions">
+              <a id="btn-strike-back" href="#" class="mdl-button">Voltar</a>
+            </div>
+          </div>
+          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="btn3">
+            <i class="material-icons">more_vert</i>
+          </button>
+          <ul class="mdl-menu mdl-js-menu mdl-menu--bottom-right" for="btn3">
+            <li class="mdl-menu__item">Lorem</li>
+            <li class="mdl-menu__item" disabled>Ipsum</li>
+            <li class="mdl-menu__item">Dolor</li>
+          </ul>
+        </section>
+
+      </div>
+      <footer class="mdl-mega-footer">
+        <div class="mdl-mega-footer--middle-section">
+          <div class="mdl-mega-footer--drop-down-section">
+            <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+            <h1 class="mdl-mega-footer--heading">Features</h1>
+            <ul class="mdl-mega-footer--link-list">
+              <li>
+                <a href="#">About</a>
+              </li>
+              <li>
+                <a href="#">Terms</a>
+              </li>
+              <li>
+                <a href="#">Partners</a>
+              </li>
+              <li>
+                <a href="#">Updates</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mdl-mega-footer--drop-down-section">
+            <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+            <h1 class="mdl-mega-footer--heading">Details</h1>
+            <ul class="mdl-mega-footer--link-list">
+              <li>
+                <a href="#">Spec</a>
+              </li>
+              <li>
+                <a href="#">Tools</a>
+              </li>
+              <li>
+                <a href="#">Resources</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mdl-mega-footer--drop-down-section">
+            <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+            <h1 class="mdl-mega-footer--heading">Technology</h1>
+            <ul class="mdl-mega-footer--link-list">
+              <li>
+                <a href="#">How it works</a>
+              </li>
+              <li>
+                <a href="#">Patterns</a>
+              </li>
+              <li>
+                <a href="#">Usage</a>
+              </li>
+              <li>
+                <a href="#">Products</a>
+              </li>
+              <li>
+                <a href="#">Contracts</a>
+              </li>
+            </ul>
+          </div>
+          <div class="mdl-mega-footer--drop-down-section">
+            <input class="mdl-mega-footer--heading-checkbox" type="checkbox" checked>
+            <h1 class="mdl-mega-footer--heading">FAQ</h1>
+            <ul class="mdl-mega-footer--link-list">
+              <li>
+                <a href="#">Questions</a>
+              </li>
+              <li>
+                <a href="#">Answers</a>
+              </li>
+              <li>
+                <a href="#">Contact us</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="mdl-mega-footer--bottom-section">
+          <div class="mdl-logo">
+            More Information
+          </div>
+          <ul class="mdl-mega-footer--link-list">
+            <li>
+              <a href="https://developers.google.com/web/starter-kit/">Web Starter Kit</a>
+            </li>
+            <li>
+              <a href="#">Help</a>
+            </li>
+            <li>
+              <a href="#">Privacy and Terms</a>
+            </li>
+          </ul>
+        </div>
+      </footer>
+    </main>
+  </div>
+  <a href="https://github.com/google/material-design-lite/blob/mdl-1.x/templates/text-only/" target="_blank" id="view-source"
+    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-color--accent mdl-color-text--accent-contrast">View Source</a>
+  <script src="js/lib/material.min.js"></script>
+  <script src="js/lib/jquery.min.js"></script>
+  <script>
+    //TODO colocar num ficheiro CSS
+    $(document).ready(function () {
+
+      initPage();
+
+      /*
+      FUNCTIONS
+      */
+      function initPage() {
+        $("#strike-list").show();
+        $("#strike-detail").hide();
+        loadStrikeList("#strike-list-table");
+      }
+
+      function loadStrikeList(placeholder) {
+        var data = fetchStrikeListData();
+        buildStrikeListTable(data, placeholder)
+      }
+
+      function fetchStrikeListData() {
+        var strikeListData;
+        strikeListData = [
+          {
+            "id": "1",
+            "tipo": "Comboios",
+            "dataInicio": "2018-09-18T00:00:00",
+            "dataFim": "2018-09-18T23:59:59.999",
+            "observacoes": "bla bla",
+            "todoDia": true,
+            "estado": "Check",
+            "estadoDescr": "Confirmada",
+            "cor": "Green",
+            "empresa": "CP",
+            "sourceLink": "http://google.com",
+            "dateGroup": "Hoje"
+          },
+          {
+            "id": "2",
+            "tipo": "Metro",
+            "dataInicio": "2018-09-19T00:00:00",
+            "dataFim": "2018-09-20T23:59:59.999",
+            "observacoes": "bla bla",
+            "todoDia": true,
+            "estado": "Cancel",
+            "estadoDescr": "Cancelada",
+            "cor": "Red",
+            "empresa": "Metro de Lisboa",
+            "sourceLink": "http://google.com",
+            "dateGroup": "Amanhã"
+          },
+          {
+            "id": "3",
+            "tipo": "Autocarro",
+            "dataInicio": "2018-09-20T10:00:00",
+            "dataFim": "2018-09-20T14:00:00",
+            "observacoes": "bla bla",
+            "todoDia": false,
+            "estado": "Help",
+            "estadoDescr": "A Confirmar",
+            "cor": "GoldenRod",
+            "empresa": "Carris",
+            "sourceLink": "http://google.com",
+            "dateGroup": "Setembro"
+          },
+          {
+            "id": "4",
+            "tipo": "Hospitais",
+            "dataInicio": "2018-09-23T17:17:05.7015853+01:00",
+            "dataFim": "2018-09-25T21:17:05.7015853+01:00",
+            "observacoes": "bla bla",
+            "todoDia": false,
+            "estado": "Help",
+            "estadoDescr": "A Confirmar",
+            "cor": "GoldenRod",
+            "empresa": "Centro Hospitalar do médio Tejo",
+            "sourceLink": "http://google.com",
+            "dateGroup": "Setembro"
+          },
+          {
+            "id": "5",
+            "tipo": "Educação",
+            "dataInicio": "2018-10-08T17:17:05.7015853+01:00",
+            "dataFim": "2018-10-09T17:17:05.7015853+01:00",
+            "observacoes": "bla bla",
+            "todoDia": true,
+            "estado": "Help",
+            "estadoDescr": "A Confirmar",
+            "cor": "GoldenRod",
+            "empresa": "Professores",
+            "sourceLink": "http://google.com",
+            "dateGroup": "Outubro"
+          }
+        ];
+        return strikeListData;
+      }
+
+      function buildStrikeListTable(data, placeHolder) {
+        dummyTable(data, placeHolder);
+      }
+
+      function scrollToTop() {
+        $("html, body").animate({ scrollTop: 0 }, "slow");
+      }
+
+      function dummyTable(data, placeHolder) {
+        myTable = $('<table></table>').addClass("demo-data-table mdl-data-table mdl-js-data-table mdl-data-table--selectable mdl-shadow--2dp");
+        myTableBody = $('<tbody></tbody>');
+        var rows = 3;
+        var cols = 3;
+        var tr = [];
+        for (var i = 0; i < rows; i++) {
+          var row = $('<tr></tr>').appendTo(myTableBody);
+          for (var j = 0; j < cols; j++) {
+            $('<td></td>').text("text1").appendTo(row);
+          }
+        }
+        $(myTable).append(myTableBody);
+        $(placeHolder).append(myTable);
+      }
+
+      /*
+      EVENTS
+      */
+      $('#btn-strike').on('click', function () {
+        $("#strike-list").hide();
+        $("#strike-detail").show();
+        scrollToTop();
+
+        //TODO ajax request
+      });
+
+      $('#btn-strike-back').on('click', function () {
+        $("#strike-list").show();
+        $("#strike-detail").hide();
+        scrollToTop();
+
+        //TODO ajax request
+      });
+
+    });
+  </script>
+</body>
+
+</html>
