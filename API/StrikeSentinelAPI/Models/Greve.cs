@@ -9,7 +9,7 @@ namespace StrikeSentinelAPI.Models
     public class Greve
     {
 
-        public Greve(string id,string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, string estado, string estadodescr, string cor, string empresa, string sourcelink)
+        public Greve(string id,string tipo, DateTime datainicio, DateTime datafim, string observacoes, bool tododia, string estado, string estadodescr, string cor, string empresa, string sourcelink, string imagelink)
         {
             Id = id;
             Tipo = tipo;
@@ -22,6 +22,7 @@ namespace StrikeSentinelAPI.Models
             Cor = cor;
             Empresa = empresa;
             SourceLink = sourcelink;
+            ImageLink = imagelink;
             SetDateName();
         }
 
@@ -179,6 +180,49 @@ namespace StrikeSentinelAPI.Models
                 {
                     _DateGroup = value;
                 }
+            }
+        }
+
+        string _ImageLink;
+        public string ImageLink
+        {
+            get { return _ImageLink; }
+            set
+            {
+                if (_ImageLink != value)
+                {
+                    _ImageLink = value;
+                }
+            }
+        }
+
+        public string FormatedDateStart
+        {
+            get {
+                if (TodoDia)
+                {
+                    return DataInicio.ToString("dd-MM-yyyy");
+                } else
+                {
+                    return DataInicio.ToString("dd-MM-yyyy HH:mm:ss");
+                }
+                
+            }
+        }
+
+        public string FormatedDateEnd
+        {
+            get
+            {
+                if (TodoDia)
+                {
+                    return DataFim.ToString("dd-MM-yyyy");
+                }
+                else
+                {
+                    return DataFim.ToString("dd-MM-yyyy HH:mm:ss");
+                }
+
             }
         }
 

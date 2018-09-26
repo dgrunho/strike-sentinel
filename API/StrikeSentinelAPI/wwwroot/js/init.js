@@ -2,7 +2,15 @@
     $(function () {
 
         $('.sidenav').sidenav();
-        $('.collapsible').collapsible({
+        
+        initColapsable()
+
+        
+    }); // end of document ready
+})
+
+function initColapsable() {
+$('.collapsible').collapsible({
             onOpenStart: function () {
                 var elems = document.querySelectorAll('.collapsible');
                 for (var i = 0; i < elems.length; i++) {
@@ -15,9 +23,6 @@
                 }
             }
         });
-
-
-        
-    }); // end of document ready
-})(jQuery); // end of jQuery name space
+}
+    (jQuery); // end of jQuery name space
 

@@ -46,21 +46,27 @@
                     <li rv-each-greve="group.greves" >
                         <div class="collapsible-header">
                             <div class="row" style="margin:0px;width:100%">
-                                <div class="col s1">
-                                    <div class="image-container">
-                                        <img class="responsive-img" rv-src="greve.myimage">
-                                    </div>
-                                </div>
-                                <div class="col s10">
-                                    
+                                <div class="col s11 left">
+                                    <table>
+                                        <tr style="border-bottom:0px">
+                                            <td style="padding:0px;width:48px!important;">
+                                                <div class="image-container">
+                                                    <img class="responsive-img" rv-src="greve.imageLink">
+                                                </div>
+                                            </td>
+                                            <td style="padding:0px" class="left">
+                                                <p>
+                                                    <span style="font-size:18px; font-weight:500">{ greve.empresa }</span> <br />
+                                                    <span style="font-size:12px; font-weight:lighter">{ greve.formatedDateStart } <i class="material-icons small-icon">keyboard_backspace</i> { greve.formatedDateEnd }</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
 
-                                    <p>
-                                        <span style="font-size:18px; font-weight:500">{ greve.empresa }</span> <br />
-                                        <span style="font-size:12px; font-weight:lighter">{ greve.dataInicio } <i class="material-icons small-icon">keyboard_backspace</i> { greve.dataFim }</span>
-                                    </p>
+
                                 </div>
                                 <div class="col s1 right-align">
-                                    <i class="material-icons estado-greve">{ greve.estado }</i>
+                                    <i class="material-icons estado-greve" rv-style-color="greve.cor">{ greve.estado }</i>
                                 </div>
                             </div>
                             
@@ -68,20 +74,25 @@
                             
 
                         </div>
-                        <div class="collapsible-body card">
+                        <div class="collapsible-body card light-green lighten-5">
 
- 
-                                <div class="card-content white-text">
-                                    <span class="card-title">Card Title</span>
+
+                            <div class="card-content">
+                                <div style="height:56px">
+                                    <div class="image-container left">
+                                        <img class="responsive-img" style="max-height:48px" rv-src="greve.imageLink">
+                                    </div>
                                     <p>
-                                        I am a very simple card. I am good at containing small bits of information.
-                                        I am convenient because I require little markup to use effectively.
+                                        <span class="card-title" style="margin-bottom:0px">{ greve.empresa }</span>                                      
+                                        <span style="font-size:14px; font-weight:bold">{ greve.tipo }</span>
                                     </p>
+                                    
                                 </div>
-                                <div class="card-action">
-                                    <a href="#">This is a link</a>
-                                    <a href="#">This is a link</a>
-                                </div>
+                                <p>
+                                    I am a very simple card. I am good at containing small bits of information.
+                                    I am convenient because I require little markup to use effectively.
+                                </p>
+                            </div>
 
 
 
@@ -110,17 +121,30 @@
     <script src="js/init.js"></script>
 
     <script> //Rivets
-        var groups = [{ "id": "1", "name": "Hoje", "greves": [{ "id": "1", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }, { "id": "6", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }] }, { "id": "2", "name": "Amanhã", "greves": [{ "id": "2", "tipo": "Metro", "dataInicio": "2018-09-21T00:00:00", "dataFim": "2018-09-22T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "cancel", "estadoDescr": "Cancelada", "cor": "Red", "empresa": "Metro de Lisboa", "sourceLink": "http://google.com", "dateGroup": "Amanhã" }, { "id": "7", "tipo": "Metro", "dataInicio": "2018-09-21T00:00:00", "dataFim": "2018-09-22T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "cancel", "estadoDescr": "Cancelada", "cor": "Red", "empresa": "Metro de Lisboa", "sourceLink": "http://google.com", "dateGroup": "Amanhã" }] }, { "id": "3", "name": "Setembro", "greves": [{ "id": "3", "tipo": "Autocarro", "dataInicio": "2018-09-22T10:00:00", "dataFim": "2018-09-22T14:00:00", "observacoes": "bla bla", "todoDia": false, "estado": "help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Carris", "sourceLink": "http://google.com", "dateGroup": "Setembro" }, { "id": "4", "tipo": "Hospitais", "dataInicio": "2018-09-25T12:24:52.9611517+01:00", "dataFim": "2018-09-27T16:24:52.9611563+01:00", "observacoes": "bla bla", "todoDia": false, "estado": "help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Centro Hospitalar do médio Tejo", "sourceLink": "http://google.com", "dateGroup": "Setembro" }, { "id": "8", "tipo": "Autocarro", "dataInicio": "2018-09-22T10:00:00", "dataFim": "2018-09-22T14:00:00", "observacoes": "bla bla", "todoDia": false, "estado": "help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Carris", "sourceLink": "http://google.com", "dateGroup": "Setembro" }, { "id": "9", "tipo": "Hospitais", "dataInicio": "2018-09-25T12:24:52.9613595+01:00", "dataFim": "2018-09-27T16:24:52.9613646+01:00", "observacoes": "bla bla", "todoDia": false, "estado": "help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Centro Hospitalar do médio Tejo", "sourceLink": "http://google.com", "dateGroup": "Setembro" }] }, { "id": "4", "name": "Outubro", "greves": [{ "id": "5", "tipo": "Educação", "dataInicio": "2018-10-10T12:24:52.9612054+01:00", "dataFim": "2018-10-11T12:24:52.96121+01:00", "observacoes": "bla bla", "todoDia": true, "estado": "help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Professores", "sourceLink": "http://google.com", "dateGroup": "Outubro" }, { "id": "10", "tipo": "Educação", "dataInicio": "2018-10-10T12:24:52.9614102+01:00", "dataFim": "2018-10-11T12:24:52.9614148+01:00", "observacoes": "bla bla", "todoDia": true, "estado": "help", "estadoDescr": "A Confirmar", "cor": "GoldenRod", "empresa": "Professores", "sourceLink": "http://google.com", "dateGroup": "Outubro" }] }]
-       
+        var groups1 = [{ "id": "1", "name": "Hojjhgjhgfjhfge", "greves": [{ "id": "1", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }, { "id": "6", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }] }]
+
+        $.get("api/StrikeNews/GroupDummy", function (data) {
+            groups1.splice(0, groups1.length)
+
+            data.forEach(function (element) {
+                groups1.push(element);
+            });
+
+
+            initColapsable()
+        });
+
+        rivets.binders['style-*'] = function (el, value) {
+            el.style.setProperty(this.args[0], value);
+        };
+
         rivets.bind(
             document.querySelector('#strikes-container'),
             {
-                groups: groups 
+                groups: groups1
             });
 
-        rivets.binders.src = function (el, value) {
-            el.src = 'http://strikesentinel-dev.ddns.net/api/StrikeNews/Icon/' + value;
-        };
+
 
         
     </script>
