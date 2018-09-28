@@ -43,7 +43,7 @@
             <div rv-each-group="groups">
                 <h5 class="strike-group-header">{ group.name }</h5> 
                 <ul class="collapsible popout" onclick="event.stopPropagation()">
-                    <li rv-each-greve="group.greves" >
+                    <li rv-each-greve="group.greves">
                         <div class="collapsible-header">
                             <div class="row" style="margin:0px;width:100%">
                                 <div class="col s11 left">
@@ -69,9 +69,9 @@
                                     <i class="material-icons estado-greve" rv-style-color="greve.cor">{ greve.estado }</i>
                                 </div>
                             </div>
-                            
 
-                            
+
+
 
                         </div>
                         <div class="collapsible-body card " style="background-image:url(images/estacao_cp.png)!important;background-size:contain;background-repeat:no-repeat;background-position:right;">
@@ -83,14 +83,22 @@
                                         <img class="responsive-img" style="max-height:48px" rv-src="greve.imageLink">
                                     </div>
                                     <p>
-                                        <span class="card-title" style="margin-bottom:0px">{ greve.empresa }</span>                                      
+                                        <span class="card-title" style="margin-bottom:0px">{ greve.empresa }</span>
                                         <span style="font-size:14px; font-weight:bold">{ greve.tipo }</span>
                                     </p>
-                                    
+
                                 </div>
                                 <p>
-                                    I am a very simple card. I am good at containing small bits of information.
-                                    I am convenient because I require little markup to use effectively.
+                                    <span>Inicio: <span style="font-weight:lighter">{ greve.formatedDateStart }</span> </span></br>
+                                    <span>Fim: <span style="font-weight:lighter">{ greve.formatedDateEnd }</span></span>
+                                </p>
+                                <p>
+                                    <span>Link: <span style="font-weight:lighter"><a rv-href="greve.sourceLink" target="_blank">{ greve.sourceLink }</a></span> </span>
+
+                                </p>
+                                <p>
+                                    <span>Obs: <span style="font-weight:lighter">{ greve.observacoes }</span> </span>
+
                                 </p>
                             </div>
 
@@ -121,7 +129,7 @@
     <script src="js/init.js"></script>
 
     <script> //Rivets
-        var groups1 = [{ "id": "1", "name": "Hojjhgjhgfjhfge", "greves": [{ "id": "1", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }, { "id": "6", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }] }]
+        var groups1 = []// [{ "id": "1", "name": "Hojjhgjhgfjhfge", "greves": [{ "id": "1", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }, { "id": "6", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }] }]
 
         $.get("api/StrikeNews/GroupDummy", function (data) {
             groups1.splice(0, groups1.length)
@@ -137,6 +145,10 @@
         rivets.binders['style-*'] = function (el, value) {
             el.style.setProperty(this.args[0], value);
         };
+
+        rivets.binders['href'] = function (el, value) {
+            el.href = value
+        }
 
         rivets.bind(
             document.querySelector('#strikes-container'),
