@@ -13,6 +13,11 @@ namespace StrikeSentinelAPI.Models
         {
         }
 
-        public DbSet<StrikeSentinelAPI.Models.StrikeNews> StrikeNews { get; set; }
+        public virtual DbSet<Company> Company { get; set; }
+        public virtual DbSet<Strike> Strike { get; set; }
+        public virtual DbSet<StrikeNews> StrikeNews { get; set; }
+        public virtual DbSet<StrikeStatus> StrikeStatus { get; set; }
+        public virtual DbSet<User> User { get; set; }
+
     }
 }

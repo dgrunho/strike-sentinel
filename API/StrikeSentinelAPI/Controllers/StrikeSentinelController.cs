@@ -6,19 +6,62 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StrikeSentinelAPI.Models;
+using WebScraper;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
 
 namespace StrikeSentinelAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/StrikeNews")]
-    public class StrikeNewsController : Controller
+    [Route("api/StrikeSentinel")]
+    public class StrikeSentinelController : Controller
     {
         private readonly StrikeNewsContext _context;
+        private readonly IHostingEnvironment _env;
 
-        public StrikeNewsController(StrikeNewsContext context)
+        public StrikeSentinelController(IHostingEnvironment hostingEnvironment, StrikeNewsContext context)
         {
+            _env = hostingEnvironment;
             _context = context;
         }
+
+        #region "Actions"
+
+        [HttpPut("SearchStrikeNews")]
+        public IActionResult SearchStrikeNews()
+        {
+            IConfiguration botContiguration;
+            try
+            {
+                botContiguration = GetConfiguration("scrapersettings.json");
+            }
+            catch (Exception)
+            {
+                //TODO log do que aconteceu de errado
+                throw;
+            }
+
+            //pesquisa novas noticias
+            DummyScraper bot = new DummyScraper(botContiguration);
+            List<String> linksList = bot.ScrapeHtml();
+            StrikeNews strikeNews;
+
+            foreach (string link in linksList)
+            {
+                if (!StrikeNewsExists(link))
+                { 
+                    strikeNews = new StrikeNews();
+                    strikeNews.SourceLink = link;
+                    _context.StrikeNews.Add(strikeNews);
+                    _context.SaveChanges();
+                }
+            }
+            return Ok();
+        }
+
+        #endregion
+
+        #region "CRUD Operations"
 
         // GET: api/StrikeNews
         [HttpGet]
@@ -33,16 +76,16 @@ namespace StrikeSentinelAPI.Controllers
             List<Greve> greves = new List<Greve>();
 
             DateTime Today = DateTime.Parse(DateTime.Now.ToString("yyyy-MM-dd"));
-            greves.Add(new Greve("1", "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "check", "Confirmada", "Green", "CP", "http://google.com", "api/StrikeNews/Icon/1"));
-            greves.Add(new Greve("2", "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com", "api/StrikeNews/Icon/2"));
-            greves.Add(new Greve("3", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "help", "A Confirmar", "GoldenRod", "Carris", "http://google.com", "api/StrikeNews/Icon/3"));
-            greves.Add(new Greve("4", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com", "api/StrikeNews/Icon/4"));
-            greves.Add(new Greve("5", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "help", "A Confirmar", "GoldenRod", "Professores", "http://google.com", "api/StrikeNews/Icon/5"));
-            greves.Add(new Greve("6", "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "check", "Confirmada", "Green", "CP", "http://google.com", "api/StrikeNews/Icon/6"));
-            greves.Add(new Greve("7", "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com", "api/StrikeNews/Icon/7"));
-            greves.Add(new Greve("8", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "help", "A Confirmar", "GoldenRod", "Carris", "http://google.com", "api/StrikeNews/Icon/8"));
-            greves.Add(new Greve("9", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com", "api/StrikeNews/Icon/9"));
-            greves.Add(new Greve("10", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "help", "A Confirmar", "GoldenRod", "Professores", "http://google.com", "api/StrikeNews/Icon/10"));
+            greves.Add(new Greve("1", "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "Check", "Confirmada", "Green", "CP", "http://google.com"));
+            greves.Add(new Greve("2", "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "Cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com"));
+            greves.Add(new Greve("3", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
+            greves.Add(new Greve("4", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
+            greves.Add(new Greve("5", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
+            greves.Add(new Greve("6", "Comboios", Today, Today.AddDays(1).AddMilliseconds(-1), "bla bla", true, "Check", "Confirmada", "Green", "CP", "http://google.com"));
+            greves.Add(new Greve("7", "Metro", Today.AddDays(1), Today.AddDays(3).AddMilliseconds(-1), "bla bla", true, "Cancel", "Cancelada", "Red", "Metro de Lisboa", "http://google.com"));
+            greves.Add(new Greve("8", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Carris", "http://google.com"));
+            greves.Add(new Greve("9", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "Help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com"));
+            greves.Add(new Greve("10", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "Help", "A Confirmar", "GoldenRod", "Professores", "http://google.com"));
 
             return greves;
         }
@@ -66,6 +109,9 @@ namespace StrikeSentinelAPI.Controllers
                     objGroup.Greves.Add(greve);
                 }
             }
+
+            return group_greves;
+        }
 
         // GET: api/StrikeNews/5
         [HttpGet("{id}")]
@@ -126,10 +172,10 @@ namespace StrikeSentinelAPI.Controllers
                     file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Carris.jpg");
                     break;
                 case 9:
-                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.png");
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.svg");
                     break;
                 case 10:
-                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professores.png");
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professor.png");
                     break;
                 default:
                     file = System.IO.Path.Combine(webRoot, "Images\\web_hi_res_512.png");
@@ -228,9 +274,74 @@ namespace StrikeSentinelAPI.Controllers
             return Ok(strikeNews);
         }
 
+        #endregion
+
         private bool StrikeNewsExists(int id)
         {
             return _context.StrikeNews.Any(e => e.StrikeNewsId == id);
         }
+
+        private bool StrikeNewsExists(string sourceLink)
+        {
+            return _context.StrikeNews.Any(e => e.SourceLink == sourceLink);
+        }
+
+        private IConfiguration GetConfiguration(string fileName)
+        {
+            
+            var builder = new ConfigurationBuilder()
+             .SetBasePath(_env.ContentRootPath)
+             .AddJsonFile(fileName, optional: true);
+
+            //TODO verificar se foram recolhidas algumas configuracoes
+
+            return builder.Build();
+        }
+
+        //TODO olhar para esta region e ver se já se pode apagar alguma coisa
+        #region "Sucata (coisas para descontinuar brevemente...)"
+
+        // GET: api/StrikeNews/search
+        [Obsolete]
+        [HttpGet("{command}")]
+        public string SearchStrikeNews([FromRoute] String command)
+        {
+            try
+            {
+                if (command == "search")
+                {
+                    List<String> news = DummyScraper.Scrape();
+                    StrikeNews strikeNews;
+                    foreach (string title in news)
+                    {
+                        strikeNews = new StrikeNews();
+                        strikeNews.SourceLink = title;
+                        _context.StrikeNews.Add(strikeNews);
+                        _context.SaveChanges();
+                    }
+                }
+                if (command == "searchv2")
+                {
+                    DummyScraper bot = new DummyScraper(GetConfiguration("scrapersettings.json"));
+                    List<String> news = bot.ScrapeHtml();
+                    StrikeNews strikeNews;
+                    foreach (string title in news)
+                    {
+                        strikeNews = new StrikeNews();
+                        strikeNews.SourceLink = title;
+                        _context.StrikeNews.Add(strikeNews);
+                        _context.SaveChanges();
+                    }
+                }
+                return command;
+            }
+            catch (Exception e)
+            {
+                return "Error: " + e.ToString();
+            }
+        }
+
+        #endregion
+
     }
 }
