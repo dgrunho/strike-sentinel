@@ -10,57 +10,57 @@ using StrikeSentinelAPI.Models;
 namespace StrikeSentinelAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/StrikeNews")]
-    public class StrikeNewsController : Controller
+    [Route("api/Users")]
+    public class UsersController : Controller
     {
         private readonly StrikeNewsContext _context;
 
-        public StrikeNewsController(StrikeNewsContext context)
+        public UsersController(StrikeNewsContext context)
         {
             _context = context;
         }
 
-        // GET: api/StrikeNews
+        // GET: api/Users
         [HttpGet]
-        public IEnumerable<StrikeNews> GetStrikeNews()
+        public IEnumerable<User> GetUser()
         {
-            return _context.StrikeNews;
+            return _context.User;
         }
 
-        // GET: api/StrikeNews/5
+        // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetStrikeNews([FromRoute] int id)
+        public async Task<IActionResult> GetUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
+            var user = await _context.User.SingleOrDefaultAsync(m => m.UserId == id);
 
-            if (strikeNews == null)
+            if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(strikeNews);
+            return Ok(user);
         }
 
-        // PUT: api/StrikeNews/5
+        // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStrikeNews([FromRoute] int id, [FromBody] StrikeNews strikeNews)
+        public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != strikeNews.StrikeNewsId)
+            if (id != user.UserId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(strikeNews).State = EntityState.Modified;
+            _context.Entry(user).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace StrikeSentinelAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StrikeNewsExists(id))
+                if (!UserExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace StrikeSentinelAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/StrikeNews
+        // POST: api/Users
         [HttpPost]
-        public async Task<IActionResult> PostStrikeNews([FromBody] StrikeNews strikeNews)
+        public async Task<IActionResult> PostUser([FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.StrikeNews.Add(strikeNews);
+            _context.User.Add(user);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStrikeNews", new { id = strikeNews.StrikeNewsId }, strikeNews);
+            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
         }
 
-        // DELETE: api/StrikeNews/5
+        // DELETE: api/Users/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStrikeNews([FromRoute] int id)
+        public async Task<IActionResult> DeleteUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
-            if (strikeNews == null)
+            var user = await _context.User.SingleOrDefaultAsync(m => m.UserId == id);
+            if (user == null)
             {
                 return NotFound();
             }
 
-            _context.StrikeNews.Remove(strikeNews);
+            _context.User.Remove(user);
             await _context.SaveChangesAsync();
 
-            return Ok(strikeNews);
+            return Ok(user);
         }
 
-        private bool StrikeNewsExists(int id)
+        private bool UserExists(int id)
         {
-            return _context.StrikeNews.Any(e => e.StrikeNewsId == id);
+            return _context.User.Any(e => e.UserId == id);
         }
     }
 }

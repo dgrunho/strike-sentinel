@@ -10,57 +10,57 @@ using StrikeSentinelAPI.Models;
 namespace StrikeSentinelAPI.Controllers
 {
     [Produces("application/json")]
-    [Route("api/StrikeNews")]
-    public class StrikeNewsController : Controller
+    [Route("api/Companies")]
+    public class CompaniesController : Controller
     {
         private readonly StrikeNewsContext _context;
 
-        public StrikeNewsController(StrikeNewsContext context)
+        public CompaniesController(StrikeNewsContext context)
         {
             _context = context;
         }
 
-        // GET: api/StrikeNews
+        // GET: api/Companies
         [HttpGet]
-        public IEnumerable<StrikeNews> GetStrikeNews()
+        public IEnumerable<Company> GetCompany()
         {
-            return _context.StrikeNews;
+            return _context.Company;
         }
 
-        // GET: api/StrikeNews/5
+        // GET: api/Companies/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetStrikeNews([FromRoute] int id)
+        public async Task<IActionResult> GetCompany([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
+            var company = await _context.Company.SingleOrDefaultAsync(m => m.CompanyId == id);
 
-            if (strikeNews == null)
+            if (company == null)
             {
                 return NotFound();
             }
 
-            return Ok(strikeNews);
+            return Ok(company);
         }
 
-        // PUT: api/StrikeNews/5
+        // PUT: api/Companies/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutStrikeNews([FromRoute] int id, [FromBody] StrikeNews strikeNews)
+        public async Task<IActionResult> PutCompany([FromRoute] int id, [FromBody] Company company)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != strikeNews.StrikeNewsId)
+            if (id != company.CompanyId)
             {
                 return BadRequest();
             }
 
-            _context.Entry(strikeNews).State = EntityState.Modified;
+            _context.Entry(company).State = EntityState.Modified;
 
             try
             {
@@ -68,7 +68,7 @@ namespace StrikeSentinelAPI.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!StrikeNewsExists(id))
+                if (!CompanyExists(id))
                 {
                     return NotFound();
                 }
@@ -81,45 +81,45 @@ namespace StrikeSentinelAPI.Controllers
             return NoContent();
         }
 
-        // POST: api/StrikeNews
+        // POST: api/Companies
         [HttpPost]
-        public async Task<IActionResult> PostStrikeNews([FromBody] StrikeNews strikeNews)
+        public async Task<IActionResult> PostCompany([FromBody] Company company)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _context.StrikeNews.Add(strikeNews);
+            _context.Company.Add(company);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetStrikeNews", new { id = strikeNews.StrikeNewsId }, strikeNews);
+            return CreatedAtAction("GetCompany", new { id = company.CompanyId }, company);
         }
 
-        // DELETE: api/StrikeNews/5
+        // DELETE: api/Companies/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteStrikeNews([FromRoute] int id)
+        public async Task<IActionResult> DeleteCompany([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var strikeNews = await _context.StrikeNews.SingleOrDefaultAsync(m => m.StrikeNewsId == id);
-            if (strikeNews == null)
+            var company = await _context.Company.SingleOrDefaultAsync(m => m.CompanyId == id);
+            if (company == null)
             {
                 return NotFound();
             }
 
-            _context.StrikeNews.Remove(strikeNews);
+            _context.Company.Remove(company);
             await _context.SaveChangesAsync();
 
-            return Ok(strikeNews);
+            return Ok(company);
         }
 
-        private bool StrikeNewsExists(int id)
+        private bool CompanyExists(int id)
         {
-            return _context.StrikeNews.Any(e => e.StrikeNewsId == id);
+            return _context.Company.Any(e => e.CompanyId == id);
         }
     }
 }
