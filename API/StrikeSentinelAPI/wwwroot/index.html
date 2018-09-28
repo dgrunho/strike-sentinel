@@ -1,0 +1,163 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0" />
+    <title>Strike Sentinel</title>
+    <link rel="icon" href="/images/favicon.ico">
+
+    <!-- CSS  -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+
+</head>
+<body onclick="clickbody()">
+
+    <header>
+        <div class="navbar-fixed">
+            <nav class="indigo" role="navigation">
+                <div class="nav-wrapper">
+                    <div class="brand-logo left">
+                        <a href="#" data-target="nav-mobile" class="sidenav-trigger show-on-large"><i class="material-icons">menu</i></a>
+                        Strike Sentinel
+
+                    </div>
+                    <form class="right">
+
+                        <div class="input-field">
+
+
+                            <input id="search" type="search" required>
+                            <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                            <i class="material-icons">close</i>
+                        </div>
+                    </form>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="container" id="strikes-container">
+            <div rv-each-group="groups">
+                <h5 class="strike-group-header">{ group.name }</h5> 
+                <ul class="collapsible popout" onclick="event.stopPropagation()">
+                    <li rv-each-greve="group.greves" >
+                        <div class="collapsible-header">
+                            <div class="row" style="margin:0px;width:100%">
+                                <div class="col s11 left">
+                                    <table>
+                                        <tr style="border-bottom:0px">
+                                            <td style="padding:0px;width:48px!important;">
+                                                <div class="image-container">
+                                                    <img class="responsive-img" rv-src="greve.imageLink">
+                                                </div>
+                                            </td>
+                                            <td style="padding:0px" class="left">
+                                                <p>
+                                                    <span style="font-size:18px; font-weight:500">{ greve.empresa }</span> <br />
+                                                    <span style="font-size:12px; font-weight:lighter">{ greve.formatedDateStart } <i class="material-icons small-icon">keyboard_backspace</i> { greve.formatedDateEnd }</span>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+
+                                </div>
+                                <div class="col s1 right-align">
+                                    <i class="material-icons estado-greve" rv-style-color="greve.cor">{ greve.estado }</i>
+                                </div>
+                            </div>
+                            
+
+                            
+
+                        </div>
+                        <div class="collapsible-body card " style="background-image:url(images/estacao_cp.png)!important;background-size:contain;background-repeat:no-repeat;background-position:right;">
+
+
+                            <div class="card-content">
+                                <div style="height:56px">
+                                    <div class="image-container left">
+                                        <img class="responsive-img" style="max-height:48px" rv-src="greve.imageLink">
+                                    </div>
+                                    <p>
+                                        <span class="card-title" style="margin-bottom:0px">{ greve.empresa }</span>                                      
+                                        <span style="font-size:14px; font-weight:bold">{ greve.tipo }</span>
+                                    </p>
+                                    
+                                </div>
+                                <p>
+                                    I am a very simple card. I am good at containing small bits of information.
+                                    I am convenient because I require little markup to use effectively.
+                                </p>
+                            </div>
+
+
+
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+    <footer class="page-footer footer-copyright orange">
+
+        <div class="container">
+            <span class="orange-text text-lighten-3">Made by </span><a class="white-text" href="team.html">Team D&sup2;</a>
+        </div>
+  
+    </footer>
+
+    <ul id="nav-mobile" class="sidenav">
+        <li><a href="#">Navbar Link2</a></li>
+    </ul>
+
+    <!--  Scripts-->
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="js/rivets.bundled.min.js"></script>
+    <script src="js/materialize.js"></script>
+    <script src="js/init.js"></script>
+
+    <script> //Rivets
+        var groups1 = [{ "id": "1", "name": "Hojjhgjhgfjhfge", "greves": [{ "id": "1", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }, { "id": "6", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }] }]
+
+        $.get("api/StrikeNews/GroupDummy", function (data) {
+            groups1.splice(0, groups1.length)
+
+            data.forEach(function (element) {
+                groups1.push(element);
+            });
+
+
+            initColapsable()
+        });
+
+        rivets.binders['style-*'] = function (el, value) {
+            el.style.setProperty(this.args[0], value);
+        };
+
+        rivets.bind(
+            document.querySelector('#strikes-container'),
+            {
+                groups: groups1
+            });
+
+
+
+        
+    </script>
+    <script> // other functions
+        function clickbody() {
+            var elems = document.querySelectorAll('.collapsible');
+            for (var i = 0; i < elems.length; i++) {
+                var instance = M.Collapsible.getInstance(elems[i]);
+                for (var j = 0; j < instance.el.children.length; j++) {
+                    instance.close(j)
+                }
+            }
+        }
+    </script>
+</body>
+</html>

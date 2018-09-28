@@ -1,0 +1,84 @@
+/* Custom Stylesheet */
+/**
+ * Use this file to override Materialize files so you can update
+ * the core Materialize files in the future
+ *
+ * Made By MaterializeCSS.com
+ */
+
+.icon-block {
+  padding: 0 15px;
+}
+.icon-block .material-icons {
+	font-size: inherit;
+}
+
+.sidenav, .sidenav-overlay {
+    top: 65px;
+}
+
+.active .collapsible-body {
+    border-bottom: 0px
+}
+
+.collapsible-header {
+    padding: 8px
+}
+
+.collapsible-header p {
+    margin: 0px !important
+}
+
+    .collapsible-header .responsive-img {
+        max-width: 48px;
+        max-height: 48px
+    }
+
+.active .collapsible-header {
+    display: none
+}
+.page-footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.strike-group-header {
+    margin-left: 24px;
+    color: gray;
+    font-weight:lighter
+}
+
+.image-container {
+    width: 48px;
+    height: 48px;
+    text-align: center;
+    margin-right: 15px;
+    margin-left: 0px;
+    vertical-align: middle
+}
+
+.small-icon {
+    transform: scaleX(-1);
+    font-size: 12px !important;
+    margin-right: 0px !important;
+}
+
+.estado-greve {
+    margin-right: 0px !important;
+}
+
+.btn-floating.halfway-fab2 {
+    position: absolute;
+    right: 72px;
+    bottom: -20px;
+}
+
+body {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+main {
+    flex: 1 0 auto;
+}
