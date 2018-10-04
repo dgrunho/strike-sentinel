@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,9 +15,11 @@ namespace StrikeSentinelAPI.Controllers
     public class StrikeNewsController : Controller
     {
         private readonly StrikeNewsContext _context;
+        private readonly IHostingEnvironment _env;
 
-        public StrikeNewsController(StrikeNewsContext context)
+        public StrikeNewsController(IHostingEnvironment hostingEnvironment, StrikeNewsContext context)
         {
+            _env = hostingEnvironment;
             _context = context;
         }
 
@@ -43,7 +46,6 @@ namespace StrikeSentinelAPI.Controllers
             greves.Add(new Greve("8", "Autocarro", Today.AddDays(2).AddHours(10), Today.AddDays(2).AddHours(14), "bla bla", false, "help", "A Confirmar", "GoldenRod", "Carris", "http://google.com", "api/StrikeNews/Icon/8"));
             greves.Add(new Greve("9", "Hospitais", DateTime.Now.AddDays(5), DateTime.Now.AddDays(7).AddHours(4), "bla bla", false, "help", "A Confirmar", "GoldenRod", "Centro Hospitalar do médio Tejo", "http://google.com", "api/StrikeNews/Icon/9"));
             greves.Add(new Greve("10", "Educação", DateTime.Now.AddDays(20), DateTime.Now.AddDays(21), "bla bla", true, "help", "A Confirmar", "GoldenRod", "Professores", "http://google.com", "api/StrikeNews/Icon/10"));
-
             return greves;
         }
 
@@ -66,6 +68,8 @@ namespace StrikeSentinelAPI.Controllers
                     objGroup.Greves.Add(greve);
                 }
             }
+            return group_greves;
+        }
 
         // GET: api/StrikeNews/5
         [HttpGet("{id}")]

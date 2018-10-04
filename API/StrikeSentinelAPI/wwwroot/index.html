@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection" />
     <link href="css/style.css" type="text/css" rel="stylesheet" media="screen,projection" />
+    <link rel="stylesheet" href="//cdn.materialdesignicons.com/2.8.94/css/materialdesignicons.min.css">
 
 </head>
 <body onclick="clickbody()">
@@ -40,7 +41,7 @@
 
     <main>
         <div class="container" id="strikes-container">
-            <div rv-each-group="groups">
+            <div rv-each-group="groups" style="display:none" rv-style-display="loading">
                 <h5 class="strike-group-header">{ group.name }</h5> 
                 <ul class="collapsible popout" onclick="event.stopPropagation()">
                     <li rv-each-greve="group.greves">
@@ -66,7 +67,7 @@
 
                                 </div>
                                 <div class="col s1 right-align">
-                                    <i class="material-icons estado-greve" rv-style-color="greve.cor">{ greve.estado }</i>
+                                    <i rv-class-mdi="greve.estado" rv-style-color="greve.cor"></i>
                                 </div>
                             </div>
 
@@ -74,7 +75,7 @@
 
 
                         </div>
-                        <div class="collapsible-body card " style="background-image:url(images/estacao_cp.png)!important;background-size:contain;background-repeat:no-repeat;background-position:right;">
+                        <div class="collapsible-body card hide-background-on-small-and-down" style="background-image:url(images/estacao_cp.png);background-size:contain;background-repeat:no-repeat;background-position:right;">
 
 
                             <div class="card-content">
@@ -89,6 +90,9 @@
 
                                 </div>
                                 <p>
+                                    <span>Estado: <span style="font-weight:lighter">{ greve.estadoDescr }</span> </span>
+                                </p>
+                                <p>
                                     <span>Inicio: <span style="font-weight:lighter">{ greve.formatedDateStart }</span> </span></br>
                                     <span>Fim: <span style="font-weight:lighter">{ greve.formatedDateEnd }</span></span>
                                 </p>
@@ -98,7 +102,9 @@
                                 </p>
                                 <p>
                                     <span>Obs: <span style="font-weight:lighter">{ greve.observacoes }</span> </span>
-
+                                </p>
+                                <p>
+                                    <span>Zonas Afetadas: <span style="font-weight:lighter">{ greve.observacoes }</span> </span>
                                 </p>
                             </div>
 
@@ -130,11 +136,23 @@
 
     <script> //Rivets
         var groups1 = []// [{ "id": "1", "name": "Hojjhgjhgfjhfge", "greves": [{ "id": "1", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }, { "id": "6", "tipo": "Comboios", "dataInicio": "2018-09-20T00:00:00", "dataFim": "2018-09-20T23:59:59.999", "observacoes": "bla bla", "todoDia": true, "estado": "check_circle", "estadoDescr": "Confirmada", "cor": "Green", "empresa": "CP", "sourceLink": "http://google.com", "dateGroup": "Hoje" }] }]
-
+        var loading = 'block'
         $.get("api/StrikeNews/GroupDummy", function (data) {
             groups1.splice(0, groups1.length)
 
             data.forEach(function (element) {
+                element.greves.forEach(function (element2) {
+                    if (element2.estado == "check") {
+                        element2.estado = "check-circle"
+                    }
+                    if (element2.estado == "cancel") {
+                        element2.estado = "close-circle"
+                    }
+                    if (element2.estado == "help") {
+                        element2.estado = "help-circle"
+                    }
+                })
+                
                 groups1.push(element);
             });
 
@@ -149,11 +167,15 @@
         rivets.binders['href'] = function (el, value) {
             el.href = value
         }
+        rivets.binders['class-mdi'] = function (el, value) {
+            el.className = 'mdi mdi-' + value
+        }
 
         rivets.bind(
             document.querySelector('#strikes-container'),
             {
-                groups: groups1
+                groups: groups1,
+                loading: loading
             });
 
 
