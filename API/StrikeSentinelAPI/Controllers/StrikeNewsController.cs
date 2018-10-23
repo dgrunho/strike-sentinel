@@ -118,7 +118,7 @@ namespace StrikeSentinelAPI.Controllers
                     file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.png");
                     break;
                 case 5:
-                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professores.png");
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professor.png");
                     break;
                 case 6:
                     file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CP.png");
@@ -133,7 +133,7 @@ namespace StrikeSentinelAPI.Controllers
                     file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\CHMT.png");
                     break;
                 case 10:
-                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professores.png");
+                    file = System.IO.Path.Combine(webRoot, "Images\\IconesEmpresas\\Professor.png");
                     break;
                 default:
                     file = System.IO.Path.Combine(webRoot, "Images\\web_hi_res_512.png");
